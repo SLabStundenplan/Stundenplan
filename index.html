@@ -1,0 +1,46 @@
+<html>
+<header>
+    <title>Stundenplan</title>
+</header>
+
+<body>
+    <label>
+        CSV Öffnen
+        <input type="file" accept=".csv, .ics" style="position: fixed; top: -100%" onchange="opencsv(event)">
+    </label>
+
+</body>
+<script>
+    function opencsv(event) {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                var array = parseCSV(e.target.result);
+                console.log("array: ", array);
+            };
+            reader.readAsText(selectedFile);
+        }
+    }
+
+    function parseCSV(csv) {
+        const lines = csv.split(/\r\n|\n/);
+        const headers = lines[0].split(';').map(header => header.trim());
+
+        const result = [];
+        for (let i = 1; i < lines.length; i++) {
+            const obj = {};
+            const currentLine = lines[i].split(';');
+
+            for (let j = 0; j < headers.length; j++) {
+                obj[headers[j]] = currentLine[j]?.replace(/^"|"$/g, '').trim();
+            }
+
+            result.push(obj);
+        }
+
+        return result;
+    }
+</script>
+
+</html>
