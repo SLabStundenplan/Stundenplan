@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+}
+
+label {
+    color: white;
+}
+
+label input {
+    position: fixed;
+    top: -100%;   
+}
