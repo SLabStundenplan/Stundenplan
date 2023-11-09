@@ -1,11 +1,42 @@
+let selected_date = new Date();
+let events = undefined;
+
+window.onload = refresh;
+
+function changeDay(i){
+    selected_date.setDate(selected_date.getDate() + i);
+    refresh();
+}
+
+function refresh() {
+    document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
+    let eventContainer = document.getElementById("eventContainer");
+    eventContainer.innerHTML = "";
+    if(events){
+        let eventsToday = events[getDayKey(selected_date)];
+        if (eventsToday){
+            eventsToday.forEach(event => {
+                const node = document.createElement("div");
+                const textnode = document.createTextNode(`${event.Titel}`);
+                node.appendChild(textnode);
+                eventContainer.appendChild(node);
+            });
+        }
+       
+    }
+}
+
+function getDayKey(date){
+    return `${date.getFullYear()}.${pad(date.getMonth() + 1, 2)}.${pad(date.getDate(), 2)}`;
+}
+
 function openCsv(event) {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            var array = parseCsv(e.target.result);
-            array = groupBy(array, (x) => `${x.Start.getFullYear()}.${pad(x.Start.getMonth() + 1, 2)}.${pad(x.Start.getDate(), 2)}`);
-            console.log(`array: `, array);
+            events = groupBy(parseCsv(e.target.result), (x) => getDayKey(x.Start));
+            refresh();
         };
         reader.readAsText(selectedFile);
     }
@@ -14,7 +45,7 @@ function openCsv(event) {
 function pad(num, size) {
     num = num.toString();
     while (num.length < size) num = "0" + num;
-    return num;
+    return num.substring(num.length - size);
 }
 
 function groupBy(xs, fn) {

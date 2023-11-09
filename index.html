@@ -10,5 +10,9 @@
         CSV Öffnen
         <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
     </label>
+    <button onclick="changeDay(-1)">&lt;</button>
+    <label id="labelSelectedDate"></label>
+    <button onclick="changeDay(1)" >></button>
+    <div id="eventContainer"></div>
 </body>
 </html>
