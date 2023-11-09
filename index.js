@@ -1,5 +1,5 @@
 let selected_date = new Date();
-let events = undefined;
+let events = JSON.parse(localStorage.getItem("events"));
 
 window.onload = refresh;
 
@@ -17,6 +17,7 @@ function refresh() {
         if (eventsToday){
             eventsToday.forEach(event => {
                 const node = document.createElement("div");
+                node.className = "event";
                 const textnode = document.createTextNode(`${event.Titel}`);
                 node.appendChild(textnode);
                 eventContainer.appendChild(node);
@@ -36,6 +37,7 @@ function openCsv(event) {
         const reader = new FileReader();
         reader.onload = function (e) {
             events = groupBy(parseCsv(e.target.result), (x) => getDayKey(x.Start));
+            localStorage.setItem("events", JSON.stringify(events));
             refresh();
         };
         reader.readAsText(selectedFile);
