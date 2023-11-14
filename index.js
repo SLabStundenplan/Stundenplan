@@ -18,9 +18,14 @@ function refresh() {
             eventsToday.forEach(event => {
                 const node = document.createElement("div");
                 node.className = "event";
-                let index = event.Titel.indexOf("(");
+                let index = event.Titel.indexOf("(");// STA (2021)
                 if (index == -1){
                     index = event.Titel.length;
+                }
+
+                let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
+                if (index2 != -1 && index2 < index){
+                    index = index2;
                 }
                 const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
                 node.appendChild(textnode);
