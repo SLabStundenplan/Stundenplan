@@ -18,7 +18,7 @@ function refresh() {
             eventsToday.forEach(event => {
                 const node = document.createElement("div");
                 node.className = "event";
-                const textnode = document.createTextNode(`${event.Titel}`);
+                const textnode = document.createTextNode(`${event.Titel.substring(0, event.Titel.length-6)}`);
                 node.appendChild(textnode);
                 eventContainer.appendChild(node);
             });
