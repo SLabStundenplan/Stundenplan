@@ -3,6 +3,10 @@ body {
     color: F9F8F8;
 }
 
+* {
+  font-family: 'Comic Sans MS', cursive;
+}
+
 
 label input {
     position: fixed;
