@@ -16,8 +16,8 @@ function refresh() {
         let eventsToday = events[getDayKey(selected_date)];
         if (eventsToday){
             eventsToday.forEach(event => {
-                const node = document.createElement("tr");
-                node.className = "event";
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
                 let index = event.Titel.indexOf("(");// STA (2021)
                 if (index == -1){
                     index = event.Titel.length;
@@ -28,8 +28,10 @@ function refresh() {
                     index = index2;
                 }
                 const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                node.appendChild(textnode);
-                eventContainer.appendChild(node);
+                td.appendChild(textnode);
+                tr.appendChild(document.createElement("td"));
+                tr.appendChild(td);
+                eventContainer.appendChild(tr);
             });
         }
        
