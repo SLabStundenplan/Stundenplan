@@ -28,6 +28,17 @@
                     <th> Montag </th>
                 </tr>
             </thead>
+
+    <h3 id="csvdateineinlesen"> CSV Datei einlesen</h3>
+            
+            <label>
+                    CSV Öffnen
+                    <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
+            </label>
+                <button onclick="changeDay(-1)">&lt;</button>
+            <label id="labelSelectedDate"></label>
+                <button onclick="changeDay(1)" >></button>
+            
             <tbody id="eventContainer" >
 
                 <tr>
@@ -57,16 +68,6 @@
             <tfoot>
             </tfoot>
         </table>
-
-        <h3 id="csvdateineinlesen"> CSV Datei einlesen</h3>
-
-            <label>
-                    CSV Öffnen
-                    <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
-            </label>
-                <button onclick="changeDay(-1)">&lt;</button>
-            <label id="labelSelectedDate"></label>
-                <button onclick="changeDay(1)" >></button>
 
             <button onclick=<li><a href="Woche.html"</a> </li> Wochen Ansicht </button> <br>
             <button onclick=<li><a href="Monat.html"</a> </li> Monats Ansicht </button> <br>
