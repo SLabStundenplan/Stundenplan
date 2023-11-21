@@ -1,4 +1,5 @@
 let selected_date = new Date();
+let selected_month = new Month();
 let events = JSON.parse(localStorage.getItem("events"));
 
 window.onload = refresh;
@@ -7,6 +8,12 @@ function changeDay(i) {
     selected_date.setDate(selected_date.getDate() + i);
     refresh();
 }
+
+function changeMonth(i) {
+    selected_month.setMonth(selected_month.getMonth() + i);
+    refresh();
+}
+
 
 function getMonday(d) {
     d = new Date(d);
