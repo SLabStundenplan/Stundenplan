@@ -16,7 +16,7 @@ function refresh() {
         let eventsToday = events[getDayKey(selected_date)];
         if (eventsToday){
             eventsToday.forEach(event => {
-                const node = document.createElement("div");
+                const node = document.createElement("tr");
                 node.className = "event";
                 let index = event.Titel.indexOf("(");// STA (2021)
                 if (index == -1){
