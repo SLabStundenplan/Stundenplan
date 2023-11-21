@@ -3,52 +3,88 @@ let events = JSON.parse(localStorage.getItem("events"));
 
 window.onload = refresh;
 
-function changeDay(i){
+function changeDay(i) {
     selected_date.setDate(selected_date.getDate() + i);
     refresh();
 }
+
+function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
 
 function refresh() {
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var dayName = daysOfWeek[selected_date.getDay()];
-    console.log(dayName);
 
     var dayHeader = document.getElementById("DayHeader");
-    if(dayHeader){
+    if (dayHeader) {
         dayHeader.innerHTML = dayName;
     }
+
+
 
     document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
     let eventContainer = document.getElementById("eventContainer");
     eventContainer.innerHTML = "";
-    if(events){
-        let eventsToday = events[getDayKey(selected_date)];
-        if (eventsToday){
-            eventsToday.forEach(event => {
-                const tr = document.createElement("tr");
-                const td = document.createElement("td");
-                let index = event.Titel.indexOf("(");// STA (2021)
-                if (index == -1){
-                    index = event.Titel.length;
-                }
 
-                let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                if (index2 != -1 && index2 < index){
-                    index = index2;
-                }
-                const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                td.appendChild(textnode);
-                tr.appendChild(document.createElement("td"));
-                tr.appendChild(td);
-                eventContainer.appendChild(tr);
-            });
+    
+    if (events) {
+        let dayView = false;
+        if (dayView) {
+            let eventsToday = events[getDayKey(selected_date)];
+            if (eventsToday) {
+                eventsToday.forEach(event => {
+                    const tr = document.createElement("tr");
+                    const td = document.createElement("td");
+                    let index = event.Titel.indexOf("(");// STA (2021)
+                    if (index == -1) {
+                        index = event.Titel.length;
+                    }
+
+                    let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
+                    if (index2 != -1 && index2 < index) {
+                        index = index2;
+                    }
+                    const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
+                    td.appendChild(textnode);
+                    tr.appendChild(document.createElement("td"));
+                    tr.appendChild(td);
+                    eventContainer.appendChild(tr);
+                });
+            }
+        } else { // weekView
+            const monday = getMonday(selected_date);
+
+            let eventsToday = events[getDayKey(monday)];
+            if (eventsToday) {
+                eventsToday.forEach(event => {
+                    const tr = document.createElement("tr");
+                    const td = document.createElement("td");
+                    let index = event.Titel.indexOf("(");// STA (2021)
+                    if (index == -1) {
+                        index = event.Titel.length;
+                    }
+
+                    let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
+                    if (index2 != -1 && index2 < index) {
+                        index = index2;
+                    }
+                    const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
+                    td.appendChild(textnode);
+                    tr.appendChild(document.createElement("td"));
+                    tr.appendChild(td);
+                    eventContainer.appendChild(tr);
+                });
+            }
         }
-       
     }
 }
 
-function getDayKey(date){
+function getDayKey(date) {
     return `${date.getFullYear()}.${pad(date.getMonth() + 1, 2)}.${pad(date.getDate(), 2)}`;
 }
 
