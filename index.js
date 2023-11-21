@@ -9,6 +9,16 @@ function changeDay(i){
 }
 
 function refresh() {
+
+    var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    var dayName = daysOfWeek[selected_date.getDay()];
+    console.log(dayName);
+
+    var dayHeader = document.getElementById("DayHeader");
+    if(dayHeader){
+        dayHeader.innerHTML = dayName;
+    }
+
     document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
     let eventContainer = document.getElementById("eventContainer");
     eventContainer.innerHTML = "";
