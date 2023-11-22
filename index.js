@@ -1,18 +1,18 @@
 let selected_date = new Date();
 let selected_view = "day";
 let events = JSON.parse(localStorage.getItem("events"));
-if (events){
+if (events) {
     Object.keys(events).forEach(key => {
         events[key].forEach(event => {
-            if (event.Start){
+            if (event.Start) {
                 event.Start = new Date(event.Start);
             }
-            if (event.Ende){
+            if (event.Ende) {
                 event.Ende = new Date(event.Ende);
             }
         });
-       
-      });
+
+    });
 }
 
 window.onload = refresh;
@@ -43,13 +43,17 @@ function addDay(d, t) {
 function getRows(date) {
     const monday = getMonday(date);
 
-    let eventsWeek = [
-        events[getDayKey(monday)],
-        events[getDayKey(addDay(monday, 1))],
-        events[getDayKey(addDay(monday, 2))],
-        events[getDayKey(addDay(monday, 3))],
-        events[getDayKey(addDay(monday, 4))]
-    ];
+    let eventsWeek = [];
+    for (let i = 0; i < 5; i++) {
+        eventsWeek.push(events[getDayKey(addDay(monday, i))]);
+    }
+
+    eventsWeek.forEach(events_list => {
+        if (events_list) {
+            events_list.sort((a, b) => a.Start.getTime() - b.Start.getTime());
+        }
+    });
+
     let rows = [];
     for (let i = 0; true; i++) {
         let cells = [];
@@ -69,7 +73,7 @@ function getRows(date) {
     return rows;
 }
 
-function formatTitle(title){
+function formatTitle(title) {
     let index = title.indexOf("(");// STA (2021)
     if (index == -1) {
         index = title.length;
@@ -81,15 +85,15 @@ function formatTitle(title){
     return title.substring(0, index);
 }
 
-function formatEventDay(event){
+function formatEventDay(event) {
     return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)} <br> ${event.Ort}`;
 }
 
-function formatEventWeek(event){
+function formatEventWeek(event) {
     return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
 }
 
-function addRow(container, texts, colspan){
+function addRow(container, texts, colspan) {
     const tr = document.createElement("tr");
     texts.forEach(text => {
         const td = document.createElement("td");
@@ -120,6 +124,8 @@ function refresh() {
         switch (selected_view) {
             case "day":
                 let eventsToday = events[getDayKey(selected_date)];
+                eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
+
                 if (eventsToday) {
                     eventsToday.forEach(event => {
                         addRow(eventContainer, ["", formatEventDay(event)], 1);
@@ -137,7 +143,7 @@ function refresh() {
                         addRow(eventContainer, [`Woche${i}`], 6);
                     }
                     let rows = getRows(addDay(selected_date, i * 7));
-                    if (rows.length > 0){
+                    if (rows.length > 0) {
                         rows.forEach(events_list => {
                             addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1);
                         });
