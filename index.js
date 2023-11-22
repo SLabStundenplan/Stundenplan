@@ -1,6 +1,19 @@
 let selected_date = new Date();
 let selected_view = "day";
 let events = JSON.parse(localStorage.getItem("events"));
+if (events){
+    Object.keys(events).forEach(key => {
+        events[key].forEach(event => {
+            if (event.Start){
+                event.Start = new Date(event.Start);
+            }
+            if (event.Ende){
+                event.Ende = new Date(event.Ende);
+            }
+        });
+       
+      });
+}
 
 window.onload = refresh;
 
@@ -68,12 +81,20 @@ function formatTitle(title){
     return title.substring(0, index);
 }
 
+function formatEventDay(event){
+    return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
+}
+
+function formatEventWeek(event){
+    return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
+}
+
 function addRow(container, texts, colspan){
     const tr = document.createElement("tr");
     texts.forEach(text => {
         const td = document.createElement("td");
         td.setAttribute('colspan', colspan);
-        td.appendChild(document.createTextNode(text));
+        td.innerHTML = text;
         tr.appendChild(td);
     });
     container.appendChild(tr);
@@ -101,13 +122,13 @@ function refresh() {
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
                     eventsToday.forEach(event => {
-                        addRow(eventContainer, ["", formatTitle(event.Titel)], 1);
+                        addRow(eventContainer, ["", formatEventDay(event)], 1);
                     });
                 }
                 break;
             case "week":
                 getRows(selected_date).forEach(events_list => {
-                    addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1);
+                    addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1);
                 });
                 break;
             case "month":
