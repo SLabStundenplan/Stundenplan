@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>Stundenplan</title>
     <script src="./index.js"></script>
@@ -9,16 +10,16 @@
 </head>
 
 <body>
-    <header id = "kopfbereich">
+    <header id="kopfbereich">
         <h1>Stundenplan (für Studenten)</h1>
     </header>
 
-    <nav id = "navibereich">
+    <nav id="navibereich">
     </nav>
-    
-    <main id = "hauptbereich">
+
+    <main id="hauptbereich">
         <h3 id="stundenplan"> Stundenplan Wochenansicht</h3>
-        <table border = "1">
+        <table border="1">
             <thead>
                 <tr>
                     <th> Time </th>
@@ -29,48 +30,7 @@
                     <th> Freitag </th>
                 </tr>
             </thead>
-            <tbody id="eventContainer" >
-
-                <tr>
-                    <td> </td>
-                    <td colspan = "3"> Vorlesung ... </td>
-                    <!--<td> Vorlesung ... </td> -->
-                    <!--<td> Vorlesung ... </td> -->
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                </tr>
-                <tr>
-                    <td> </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                </tr>
-                <tr>
-                    <td> </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td rowspan = "2">  </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                </tr>
-                <tr>
-                    <td> </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <!--<td> Vorlesung ... </td> -->
-                    <td> Vorlesung ... </td>
-                </tr>
-                <tr>
-                    <td> </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                    <td> Vorlesung ... </td>
-                </tr>
+            <tbody id="eventContainer">
             </tbody>
             <tfoot>
             </tfoot>
@@ -78,24 +38,25 @@
 
         <h3 id="csvdateineinlesen"> CSV Datei einlesen</h3>
 
-            <label>
-                    CSV Öffnen
-                    <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
-            </label>
-                <button onclick="changeDay(-7)">&lt;</button>
-            <label id="labelSelectedDate"></label>
-                <button onclick="changeDay(7)" >></button>
-            <div id="eventContainer"></div>
+        <label>
+            CSV Öffnen
+            <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
+        </label>
+        <button onclick="changeDay(-7)">&lt;</button>
+        <label id="labelSelectedDate"></label>
+        <button onclick="changeDay(7)">></button>
+        <div id="eventContainer"></div>
 
-            <button onclick=<li><a href="Tag.html"</a> </li> Tages Ansicht </button> <br>
-            <button onclick=<li><a href="Monat.html"</a> </li> Monats Ansicht </button> <br>
-            <button onclick=<li><a href="https://slabstundenplan.github.io/Stundenplan/"</a> </li> Startseite </button>
+        <button onclick=<li><a href="Tag.html" </a> </li> Tages Ansicht </button> <br>
+        <button onclick=<li><a href="Monat.html" </a> </li> Monats Ansicht </button> <br>
+        <button onclick=<li><a href="https://slabstundenplan.github.io/Stundenplan/" </a> </li> Startseite </button>
 
         <h3> Notizen</h3>
-            <p>
-            </p>
+        <p>
+        </p>
     </main>
     <footer>
     </footer>
 </body>
+
 </html>
