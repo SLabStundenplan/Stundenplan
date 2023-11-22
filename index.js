@@ -1,4 +1,5 @@
 let selected_date = new Date();
+let selected_view = "day";
 let events = JSON.parse(localStorage.getItem("events"));
 
 window.onload = refresh;
@@ -52,7 +53,6 @@ function getRows(date) {
             rows.push(cells);
         }
     }
-    console.log(rows);
     return rows;
 }
 
@@ -72,38 +72,13 @@ function refresh() {
     let eventContainer = document.getElementById("eventContainer");
     eventContainer.innerHTML = "";
 
-
     if (events) {
-        let dayView = false;
-        if (dayView) {
-            let eventsToday = events[getDayKey(selected_date)];
-            if (eventsToday) {
-                eventsToday.forEach(event => {
-                    const tr = document.createElement("tr");
-                    const td = document.createElement("td");
-                    let index = event.Titel.indexOf("(");// STA (2021)
-                    if (index == -1) {
-                        index = event.Titel.length;
-                    }
-
-                    let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                    if (index2 != -1 && index2 < index) {
-                        index = index2;
-                    }
-                    const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                    td.appendChild(textnode);
-                    tr.appendChild(document.createElement("td"));
-                    tr.appendChild(td);
-                    eventContainer.appendChild(tr);
-                });
-            }
-        } else { // weekView
-            getRows(selected_date).forEach(events_list => {
-                const tr = document.createElement("tr");
-                tr.appendChild(document.createElement("td"));
-
-                events_list.forEach(event => {
-                    if (event) {
+        switch (selected_view) {
+            case "day":
+                let eventsToday = events[getDayKey(selected_date)];
+                if (eventsToday) {
+                    eventsToday.forEach(event => {
+                        const tr = document.createElement("tr");
                         const td = document.createElement("td");
                         let index = event.Titel.indexOf("(");// STA (2021)
                         if (index == -1) {
@@ -116,15 +91,45 @@ function refresh() {
                         }
                         const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
                         td.appendChild(textnode);
-                        tr.appendChild(td);
-                    } else {
                         tr.appendChild(document.createElement("td"));
-                    }
-
+                        tr.appendChild(td);
+                        eventContainer.appendChild(tr);
+                    });
+                }
+                break;
+            case "week":
+                getRows(selected_date).forEach(events_list => {
+                    const tr = document.createElement("tr");
+                    tr.appendChild(document.createElement("td"));
+    
+                    events_list.forEach(event => {
+                        if (event) {
+                            const td = document.createElement("td");
+                            let index = event.Titel.indexOf("(");// STA (2021)
+                            if (index == -1) {
+                                index = event.Titel.length;
+                            }
+    
+                            let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
+                            if (index2 != -1 && index2 < index) {
+                                index = index2;
+                            }
+                            const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
+                            td.appendChild(textnode);
+                            tr.appendChild(td);
+                        } else {
+                            tr.appendChild(document.createElement("td"));
+                        }
+    
+                    });
+    
+                    eventContainer.appendChild(tr);
                 });
-
-                eventContainer.appendChild(tr);
-            });
+                break;
+            case "month":
+                break;
+            default:
+                break;
         }
     }
 }
