@@ -56,6 +56,29 @@ function getRows(date) {
     return rows;
 }
 
+function formatTitle(title){
+    let index = title.indexOf("(");// STA (2021)
+    if (index == -1) {
+        index = title.length;
+    }
+    let index2 = title.indexOf(","); // Makerspace, Makerspace, 
+    if (index2 != -1 && index2 < index) {
+        index = index2;
+    }
+    return title.substring(0, index);
+}
+
+function addRow(container, texts, colspan){
+    const tr = document.createElement("tr");
+    texts.forEach(text => {
+        const td = document.createElement("td");
+        td.setAttribute('colspan', colspan);
+        td.appendChild(document.createTextNode(text));
+        tr.appendChild(td);
+    });
+    container.appendChild(tr);
+}
+
 function refresh() {
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -78,104 +101,28 @@ function refresh() {
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
                     eventsToday.forEach(event => {
-                        const tr = document.createElement("tr");
-                        const td = document.createElement("td");
-                        let index = event.Titel.indexOf("(");// STA (2021)
-                        if (index == -1) {
-                            index = event.Titel.length;
-                        }
-
-                        let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                        if (index2 != -1 && index2 < index) {
-                            index = index2;
-                        }
-                        const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                        td.appendChild(textnode);
-                        tr.appendChild(document.createElement("td"));
-                        tr.appendChild(td);
-                        eventContainer.appendChild(tr);
+                        addRow(eventContainer, ["", formatTitle(event.Titel)], 1);
                     });
                 }
                 break;
             case "week":
                 getRows(selected_date).forEach(events_list => {
-                    const tr = document.createElement("tr");
-                    tr.appendChild(document.createElement("td"));
-
-                    events_list.forEach(event => {
-                        if (event) {
-                            const td = document.createElement("td");
-                            let index = event.Titel.indexOf("(");// STA (2021)
-                            if (index == -1) {
-                                index = event.Titel.length;
-                            }
-
-                            let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                            if (index2 != -1 && index2 < index) {
-                                index = index2;
-                            }
-                            const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                            td.appendChild(textnode);
-                            tr.appendChild(td);
-                        } else {
-                            tr.appendChild(document.createElement("td"));
-                        }
-
-                    });
-
-                    eventContainer.appendChild(tr);
+                    addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1);
                 });
                 break;
             case "month":
                 for (let i = 0; i < 5; i++) {
                     if (i > 0) {
-                        const tr = document.createElement("tr");
-                        const td = document.createElement("td");
-                        const textnode = document.createTextNode(`Woche${i}`);
-                        td.appendChild(textnode);
-                        td.setAttribute('colspan', 6);
-                        tr.appendChild(td);
-                        eventContainer.appendChild(tr);
+                        addRow(eventContainer, [`Woche${i}`], 6);
                     }
                     let rows = getRows(addDay(selected_date, i * 7));
                     if (rows.length > 0){
                         rows.forEach(events_list => {
-                            const tr = document.createElement("tr");
-                            tr.appendChild(document.createElement("td"));
-    
-                            events_list.forEach(event => {
-                                if (event) {
-                                    const td = document.createElement("td");
-                                    let index = event.Titel.indexOf("(");// STA (2021)
-                                    if (index == -1) {
-                                        index = event.Titel.length;
-                                    }
-    
-                                    let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                                    if (index2 != -1 && index2 < index) {
-                                        index = index2;
-                                    }
-                                    const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                                    td.appendChild(textnode);
-                                    tr.appendChild(td);
-                                } else {
-                                    tr.appendChild(document.createElement("td"));
-                                }
-    
-                            });
-    
-                            eventContainer.appendChild(tr);
+                            addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1);
                         });
                     } else {
-                        const tr = document.createElement("tr");
-                        const td = document.createElement("td");
-                        const textnode = document.createTextNode(`keine Termine ...`);
-                        td.appendChild(textnode);
-                        td.setAttribute('colspan', 6);
-                        tr.appendChild(td);
-                        eventContainer.appendChild(tr);
+                        addRow(eventContainer, [`keine Termine ...`], 6);
                     }
-                    
                 }
                 break;
             default:
