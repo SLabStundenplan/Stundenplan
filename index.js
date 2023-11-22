@@ -17,9 +17,44 @@ function changeMonth(i) {
 function getMonday(d) {
     d = new Date(d);
     var day = d.getDay(),
-      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        diff = d.getDate() - day + (day == 0 ? -6 : 1);
     return new Date(d.setDate(diff));
-  }
+}
+function addDay(d, t) {
+    d = new Date(d);
+    var diff = d.getDate() + t;
+    return new Date(d.setDate(diff));
+}
+
+function getRows(date) {
+    const monday = getMonday(date);
+
+    let eventsWeek = [
+        events[getDayKey(monday)],
+        events[getDayKey(addDay(monday, 1))],
+        events[getDayKey(addDay(monday, 2))],
+        events[getDayKey(addDay(monday, 3))],
+        events[getDayKey(addDay(monday, 4))]
+    ];
+    let rows = [];
+    for (let i = 0; true; i++) {
+        let cells = [];
+        eventsWeek.forEach(events_list => {
+            if (events_list && events_list.length > 0) {
+                cells.push(events_list[i]);
+            } else {
+                cells.push(undefined);
+            }
+        });
+        if (cells.every(item => item === undefined)) {
+            break;
+        } else {
+            rows.push(cells);
+        }
+    }
+    console.log(rows);
+    return rows;
+}
 
 function refresh() {
 
@@ -37,7 +72,7 @@ function refresh() {
     let eventContainer = document.getElementById("eventContainer");
     eventContainer.innerHTML = "";
 
-    
+
     if (events) {
         let dayView = false;
         if (dayView) {
@@ -63,29 +98,33 @@ function refresh() {
                 });
             }
         } else { // weekView
-            const monday = getMonday(selected_date);
+            getRows(selected_date).forEach(events_list => {
+                const tr = document.createElement("tr");
+                tr.appendChild(document.createElement("td"));
 
-            let eventsToday = events[getDayKey(monday)];
-            if (eventsToday) {
-                eventsToday.forEach(event => {
-                    const tr = document.createElement("tr");
-                    const td = document.createElement("td");
-                    let index = event.Titel.indexOf("(");// STA (2021)
-                    if (index == -1) {
-                        index = event.Titel.length;
+                events_list.forEach(event => {
+                    if (event) {
+                        const td = document.createElement("td");
+                        let index = event.Titel.indexOf("(");// STA (2021)
+                        if (index == -1) {
+                            index = event.Titel.length;
+                        }
+
+                        let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
+                        if (index2 != -1 && index2 < index) {
+                            index = index2;
+                        }
+                        const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
+                        td.appendChild(textnode);
+                        tr.appendChild(td);
+                    } else {
+                        tr.appendChild(document.createElement("td"));
                     }
 
-                    let index2 = event.Titel.indexOf(","); // Makerspace, Makerspace, 
-                    if (index2 != -1 && index2 < index) {
-                        index = index2;
-                    }
-                    const textnode = document.createTextNode(`${event.Titel.substring(0, index)}`);
-                    td.appendChild(textnode);
-                    tr.appendChild(document.createElement("td"));
-                    tr.appendChild(td);
-                    eventContainer.appendChild(tr);
                 });
-            }
+
+                eventContainer.appendChild(tr);
+            });
         }
     }
 }
