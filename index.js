@@ -173,12 +173,10 @@ function openCsv(event) {
             events = groupBy(parseCsv(e.target.result), (x) => getDayKey(x.Start));
             localStorage.setItem("events", JSON.stringify(events));
             refresh();
-            console.log(window.location.href);
-            console.log(window.location.pathname);
             if (window.location.href.endsWith("index.html")) {
-                window.location.href = window.location.href.substring(0, window.location.href.length - "index.html".length) + "monat.html";
+                window.location.href = window.location.href.substring(0, window.location.href.length - "index.html".length) + "Monat.html";
             } else {
-                window.location.href = window.location.href + "/monat.html";
+                window.location.href = window.location.href + "Monat.html";
             }
         };
         reader.readAsText(selectedFile);
