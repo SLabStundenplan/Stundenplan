@@ -17,13 +17,13 @@ if (events) {
 
 window.onload = refresh;
 
-function change(i){
+function change(i) {
     switch (selected_view) {
         case "day":
             changeDay(i);
             break;
         case "week":
-            changeDay(i*7);
+            changeDay(i * 7);
             break;
         case "month":
             changeMonth(i);
@@ -118,6 +118,17 @@ function addRow(container, texts, colspan) {
     container.appendChild(tr);
 }
 
+function set_invisible(element_ids) {
+    element_ids.forEach(element_id => {
+        document.getElementById(element_id).style.display = 'none';
+    });
+}
+function set_visible(element_ids) {
+    element_ids.forEach(element_id => {
+        document.getElementById(element_id).style.display = 'table-cell';
+    });
+}
+
 function refresh() {
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -132,28 +143,43 @@ function refresh() {
 
     document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
     let eventContainer = document.getElementById("eventContainer");
-    if (eventContainer === null){
+    if (eventContainer === null) {
         return;
-    } 
+    }
     eventContainer.innerHTML = "";
 
     if (events) {
+        let headers = ["headerTuesday",
+        "headerWednesday",
+        "headerThursday",
+        "headerFriday"];
         switch (selected_view) {
             case "day":
+                set_invisible(headers);
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
                     eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
                     eventsToday.forEach(event => {
                         addRow(eventContainer, ["", formatEventDay(event)], 1);
                     });
-                }            
+                } else {
+                    addRow(eventContainer, [`keine Termine ...`], 2);
+                }
                 break;
             case "week":
-                getRows(selected_date).forEach(events_list => {
-                    addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1);
-                });
+                set_visible(headers);
+                let rows = getRows(selected_date);
+                if (rows.length > 0) {
+                    rows.forEach(events_list => {
+                        addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1);
+                    });
+                } else {
+                    addRow(eventContainer, [`keine Termine ...`], 6);
+                }
+
                 break;
             case "month":
+                set_visible(headers);
                 for (let i = 0; i < 5; i++) {
                     if (i > 0) {
                         addRow(eventContainer, [`Woche${i}`], 6);
