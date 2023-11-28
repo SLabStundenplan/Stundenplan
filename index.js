@@ -17,6 +17,22 @@ if (events) {
 
 window.onload = refresh;
 
+function change(i){
+    console.log(selected_view);
+    switch (selected_view) {
+        case "day":
+            changeDay(i);
+            break;
+        case "week":
+            changeDay(i*7);
+            break;
+        case "month":
+            console.log("change month");
+            changeMonth(i);
+            break;
+    }
+}
+
 function changeDay(i) {
     selected_date.setDate(selected_date.getDate() + i);
     refresh();
