@@ -24,7 +24,7 @@
                 <tr>
                     <th> Time </th>
                     <th id="headerMonday"> Montag </th>
-                    <th id="headerTuesday" > Dienstag</th>
+                    <th id="headerTuesday"> Dienstag</th>
                     <th id="headerWednesday"> Mittwoch </th>
                     <th id="headerThursday"> Donnerstag </th>
                     <th id="headerFriday"> Freitag </th>
@@ -51,12 +51,12 @@
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
 
-     <h3> Notizen </h3>
+        <h3 id="headerNotes"> Notizen </h3>
         <br>
-        <br> 
-        <br> 
-           <input placeholder = "Notizen Eingabe"> 
-        
+        <br>
+        <br>
+        <input id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
+
     </main>
     <footer>
     </footer>

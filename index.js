@@ -1,5 +1,6 @@
 let selected_date = new Date();
 let selected_view = "day";
+let selected_event = undefined;
 let events = JSON.parse(localStorage.getItem("events"));
 if (events) {
     Object.keys(events).forEach(key => {
@@ -107,14 +108,20 @@ function formatEventWeek(event) {
     return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
 }
 
-function addRow(container, texts, colspan) {
+function addRow(container, texts, colspan, data) {
     const tr = document.createElement("tr");
-    texts.forEach(text => {
+    for (let i = 0; i < texts.length; i++) {
         const td = document.createElement("td");
         td.setAttribute('colspan', colspan);
-        td.innerHTML = text;
+        td.innerHTML = texts[i];
+        if (data && data[i]){
+            td.addEventListener('click', (e) =>{
+                selected_event = data[i];
+                refreshEvent();
+            });
+        }
         tr.appendChild(td);
-    });
+      }
     container.appendChild(tr);
 }
 
@@ -145,6 +152,28 @@ function set_visible(element_ids) {
     });
 }
 
+function refreshEvent(){
+    var dayHeader = document.getElementById("headerNotes");
+    if (dayHeader) {
+        dayHeader.innerHTML =  `Notizen für ${formatTitle(selected_event.Titel)} ${pad(selected_event.Start.getDate(), 2)}.${pad(selected_event.Start.getMonth() + 1, 2)}.${pad(selected_event.Start.getFullYear(), 2)} ${pad(selected_event.Start.getHours(), 2)}.${pad(selected_event.Start.getMinutes(), 2)} - ${pad(selected_event.Ende.getHours(), 2)}.${pad(selected_event.Ende.getMinutes(), 2)}`;
+    }
+    var inputNotes = document.getElementById("inputNotes");
+    if (inputNotes){
+        if(selected_event.notes){
+            inputNotes.value = selected_event.notes;
+        } else {
+            inputNotes.value = "";
+        }
+        
+    }
+}
+function noteInput(event){
+    if(selected_event){
+        selected_event.notes = event.target.value;
+        localStorage.setItem("events", JSON.stringify(events));
+    }
+}
+
 function refresh() {
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -155,8 +184,6 @@ function refresh() {
         dayHeader.innerHTML = dayName;
     }
 
-
-
     document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
     let eventContainer = document.getElementById("eventContainer");
     if (eventContainer === null) {
@@ -166,9 +193,9 @@ function refresh() {
 
     if (events) {
         let headers = ["headerTuesday",
-        "headerWednesday",
-        "headerThursday",
-        "headerFriday"];
+            "headerWednesday",
+            "headerThursday",
+            "headerFriday"];
         switch (selected_view) {
             case "day":
                 setVisible(["weekView", "monthView"]);
@@ -178,7 +205,7 @@ function refresh() {
                 if (eventsToday) {
                     eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
                     eventsToday.forEach(event => {
-                        addRow(eventContainer, ["", formatEventDay(event)], 1);
+                        addRow(eventContainer, ["", formatEventDay(event)], 1, [undefined, event]);
                     });
                 } else {
                     addRow(eventContainer, [`keine Termine ...`], 2);
@@ -191,7 +218,7 @@ function refresh() {
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
                     rows.forEach(events_list => {
-                        addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1);
+                        addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1, [""].concat(events_list));
                     });
                 } else {
                     addRow(eventContainer, [`keine Termine ...`], 6);
@@ -208,8 +235,8 @@ function refresh() {
                     }
                     let rows = getRows(addDay(selected_date, i * 7));
                     if (rows.length > 0) {
-                        rows.forEach(events_list => {
-                            addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1);
+                        rows.forEach(events_list => {9
+                            addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1, [""].concat(events_list));
                         });
                     } else {
                         addRow(eventContainer, [`keine Termine ...`], 6);
@@ -225,6 +252,8 @@ function refresh() {
 function getDayKey(date) {
     return `${date.getFullYear()}.${pad(date.getMonth() + 1, 2)}.${pad(date.getDate(), 2)}`;
 }
+
+
 
 function openCsv(event) {
     const selectedFile = event.target.files[0];
