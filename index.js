@@ -118,6 +118,22 @@ function addRow(container, texts, colspan) {
     container.appendChild(tr);
 }
 
+function setHidden(element_ids) {
+    element_ids.forEach(element_id => {
+        document.getElementById(element_id).style.visibility = 'hidden';
+    });
+}
+function setVisible(element_ids) {
+    element_ids.forEach(element_id => {
+        document.getElementById(element_id).style.visibility = 'visible';
+    });
+}
+function setCollapse(element_ids) {
+    element_ids.forEach(element_id => {
+        document.getElementById(element_id).style.visibility = 'collapse ';
+    });
+}
+
 function set_invisible(element_ids) {
     element_ids.forEach(element_id => {
         document.getElementById(element_id).style.display = 'none';
@@ -155,6 +171,8 @@ function refresh() {
         "headerFriday"];
         switch (selected_view) {
             case "day":
+                setVisible(["weekView", "monthView"]);
+                setHidden(["dayView"]);
                 set_invisible(headers);
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
@@ -167,6 +185,8 @@ function refresh() {
                 }
                 break;
             case "week":
+                setVisible(["dayView", "monthView"]);
+                setHidden(["weekView"]);
                 set_visible(headers);
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
@@ -179,6 +199,8 @@ function refresh() {
 
                 break;
             case "month":
+                setVisible(["dayView", "weekView"]);
+                setHidden(["monthView"]);
                 set_visible(headers);
                 for (let i = 0; i < 5; i++) {
                     if (i > 0) {
