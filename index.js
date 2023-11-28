@@ -118,6 +118,9 @@ function refresh() {
 
     document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
     let eventContainer = document.getElementById("eventContainer");
+    if (eventContainer === null){
+        return;
+    } 
     eventContainer.innerHTML = "";
 
     if (events) {
@@ -170,6 +173,13 @@ function openCsv(event) {
             events = groupBy(parseCsv(e.target.result), (x) => getDayKey(x.Start));
             localStorage.setItem("events", JSON.stringify(events));
             refresh();
+            console.log(window.location.href);
+            console.log(window.location.pathname);
+            if (window.location.href.endsWith("index.html")) {
+                window.location.href = window.location.href.substring(0, window.location.href.length - "index.html".length) + "monat.html";
+            } else {
+                window.location.href = window.location.href + "/monat.html";
+            }
         };
         reader.readAsText(selectedFile);
     }
