@@ -18,7 +18,6 @@ if (events) {
 window.onload = refresh;
 
 function change(i){
-    console.log(selected_view);
     switch (selected_view) {
         case "day":
             changeDay(i);
@@ -27,7 +26,6 @@ function change(i){
             changeDay(i*7);
             break;
         case "month":
-            console.log("change month");
             changeMonth(i);
             break;
     }
@@ -143,13 +141,12 @@ function refresh() {
         switch (selected_view) {
             case "day":
                 let eventsToday = events[getDayKey(selected_date)];
-                eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
-
                 if (eventsToday) {
+                    eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
                     eventsToday.forEach(event => {
                         addRow(eventContainer, ["", formatEventDay(event)], 1);
                     });
-                }
+                }            
                 break;
             case "week":
                 getRows(selected_date).forEach(events_list => {
@@ -189,11 +186,6 @@ function openCsv(event) {
             events = groupBy(parseCsv(e.target.result), (x) => getDayKey(x.Start));
             localStorage.setItem("events", JSON.stringify(events));
             refresh();
-            if (window.location.href.endsWith("index.html")) {
-                window.location.href = window.location.href.substring(0, window.location.href.length - "index.html".length) + "Monat.html";
-            } else {
-                window.location.href = window.location.href + "Monat.html";
-            }
         };
         reader.readAsText(selectedFile);
     }
