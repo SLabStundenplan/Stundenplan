@@ -30,5 +30,8 @@ td:hover {
 }
 
 .noteAdded {
- background-color: red;
+  background-color: #F0FFFF;
 }
+
+td:hover.noteAdded {
+  background-color: #FFE4C4;
