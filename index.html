@@ -39,33 +39,27 @@
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
         <br>
-        <button onclick=showLoginDialog()> Termin hinzufügen </button>
-        <dialog id = "login-dialog"> 
+        
+        <button onclick=showLoginDialog(true)> Termin hinzufügen </button>
+        
+        <dialog id="login-dialog"> 
             <div class="wrapper"> 
-            <h2> Termin erstellen </h2>
-            <form> 
-                <input type = "Datum auswählen"> 
-                <input type = "Termin"> 
-                <button> Termin erstellen </button>
-                <button onclick=closeLoginDialog() type="button"> Cancel </button> 
-            </form>
+                <h2>Termin erstellen</h2>
+                <form> 
+                    <input type="Datum auswählen"> 
+                    <input type="Termin"> 
+                    <button>Termin erstellen</button>
+                    <button onclick=closeLoginDialog(false) type="button">Cancel</button> 
+                </form>
             </div> 
         </dialog> 
         
         <script> 
             const dialog = document.getElementById("login-dialog")
             const wrapper = document.querySelector(".wrapper")
-            function showLoginDialog() {                         
-                dialog.showModal()
-            }
-            function closeLoginDialog() {
-                dialog.close() => dialog.close())
-            }
-           dialog.addEventListener("click", (e) => {
-               if(!wrapper.contains(e.target)){
-                   dialog.close() 
-               }
-           })
+            
+            const showLoginDialog = (show) => show ? dialog. showModal() : dialog.close() 
+            dialog.addEventListener('click', (e) => !wrapper.contains(e.target) && dialog.close())
         </script>
         
         <br> 
