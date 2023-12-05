@@ -121,6 +121,8 @@ function addRow(container, texts, colspan, data) {
             });
             if(data[i].notes && data[i].notes.length > 0){
                 td.classList.add("noteAdded");
+            } else{
+                td.classList.add("noteRemoved");
             }
         }
         tr.appendChild(td);
