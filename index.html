@@ -27,18 +27,6 @@
             CSV Öffnen
             <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
         </label>
-        <button onclick="change(-1)">&lt;</button>
-        <label id="labelSelectedDate"></label>
-        <button onclick="change(1)">></button>
-        <div id="eventContainer"></div>
-
-        <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
-        <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
-        <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
-
-        <h3 id="headerNotes"> Notizen </h3>
-        <br>
-        <input id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
         
         <table border="1">
             <thead>
@@ -56,7 +44,19 @@
             <tfoot>
             </tfoot>
         </table>
+        <br> 
+        <button onclick="change(-1)">&lt;</button> <br> 
+        <label id="labelSelectedDate"></label>
+        <button onclick="change(1)">></button>
+        <div id="eventContainer"></div>
 
+        <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
+        <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
+        <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
+
+        <h3 id="headerNotes"> Notizen </h3>
+        <br>
+        <input id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
     </main>
     <footer>
     </footer>
