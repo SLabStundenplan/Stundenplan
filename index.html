@@ -30,11 +30,11 @@
         <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
-        <br> -- Zeilenumbruch --
+        <br> 
         <table border="1">
             <thead>
                 <tr>
-                    <th> Time </th>                                <! Tabelle  
+                    <th> Time </th>                                
                     <th id="headerMonday"> Montag </th>
                     <th id="headerTuesday"> Dienstag</th>
                     <th id="headerWednesday"> Mittwoch </th>
@@ -48,7 +48,7 @@
             </tfoot>
         </table>
         <br> 
-        <button onclick="change(-1)">&lt;</button>             <! Datum ändern
+        <button onclick="change(-1)">&lt;</button>             
         <label id="labelSelectedDate"></label>
         <button onclick="change(1)">></button>
         <div id="eventContainer"></div>
