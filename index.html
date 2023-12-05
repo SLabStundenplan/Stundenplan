@@ -7,6 +7,14 @@
         selected_view = "week";
     </script>
     <link rel="stylesheet" href="./style.css">
+    <style> 
+        dialog {
+            padding: 0; 
+        }
+        dialog .wrapper{
+            padding: 16px; 
+        }
+    </style>
 </head>
 
 <body>
@@ -31,6 +39,37 @@
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
         <br>
+        <button onclick=showLoginDialog()> Termin hinzufügen </button>
+        <dialog id = "login-dialog"> 
+            <div class="wrapper"> 
+            <h2> Termin erstellen </h2>
+            <form> 
+                <input type = "Datum auswählen"> 
+                <input type = "Termin"> 
+                <button> Termin erstellen </button>
+                <button onclick=closeLoginDialog() type="button"> Cancel </button> 
+            </form>
+            </div> 
+        </dialog> 
+        
+        <script> 
+            const dialog = document.getElementById("login-dialog")
+            const wrapper = document.querySelector(".wrapper")
+            function showLoginDialog() {                         <!--verantwortlich fürs öffnen und schließen des Fensters--> 
+                dialog.showModal()
+            }
+            function closeLoginDialog() {
+                dialog.close() => dialog.close())
+            }
+           dialog.addEventListener("click", (e) => {
+               if(!wrapper.contains(e.target)){
+                   dialog.close() 
+               }
+           }
+        </script>
+        
+        <br> 
+        
         <table border="1">
             <thead>
                 <tr>
