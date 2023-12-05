@@ -30,7 +30,7 @@
         <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
-        <br> 
+        <br>
         <table border="1">
             <thead>
                 <tr>
@@ -55,7 +55,8 @@
             <br> 
         <h3 id="headerNotes"> Notizen </h3>
         <br>
-        <input class="NoteInput" id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
+        <textarea class="NoteInput" id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
+        </textarea> 
     </main>
     <footer>
     </footer>
