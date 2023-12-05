@@ -8,20 +8,15 @@ body {
 }
 
 
-label textarea {
-    position: fixed;
-    top: -100%;
-}
-
-.noteInput {
+textarea {
   display: block;
   width: 70%;
   font-color: F9F8F8;
   rows: 10;
   margin-left: auto;
   margin-right: auto;
+  top: -100%;
 }
-
 
 button {
   color: F9F8F8;
