@@ -56,7 +56,7 @@ function addDay(d, t) {
 }
 
 function getRows(date) {
-    const monday = getMonday(date);
+    let monday = getMonday(date);
 
     let eventsWeek = [];
     for (let i = 0; i < 5; i++) {
@@ -108,8 +108,8 @@ function formatEventWeek(event) {
     return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
 }
 
-function formatEventWeekHeader(event) {
-    return `${pad(event.Start.getDate(), 2)}.${pad(event.Start.getMonth() + 1, 2)}.${pad(event.Start.getFullYear(), 2)}`;
+function formatDate(date) {
+    return `${pad(date.getDate(), 2)}.${pad(date.getMonth() + 1, 2)}.${pad(date.getFullYear(), 2)}`;
 }
 
 function getCalendarWeek(date) {
@@ -274,9 +274,12 @@ function refresh() {
                 setVisible(["dayView", "monthView"]);
                 setHidden(["weekView"]);
                 set_visible(headers);
+
+                let monday = getMonday(selected_date);
+                addRow(eventContainer, [""].concat([0,1,2,3,4,].map((i) => formatDate(addDay(monday, i)))), 1);
+
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
-                    addRow(eventContainer, [""].concat(rows[0].map((event) => event ? formatEventWeekHeader(event) : "")), 1);
                     rows.forEach(events_list => {
                         addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1, [""].concat(events_list));
                     });
@@ -292,9 +295,11 @@ function refresh() {
                 for (let i = 0; i < 5; i++) {
                     let day = addDay(selected_date, i * 7);
                     addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 6);
+                    let monday = getMonday(day);
+                    addRow(eventContainer, [""].concat([0,1,2,3,4].map((i) => formatDate(addDay(monday, i)))), 1);
+
                     let rows = getRows(day);
                     if (rows.length > 0) {
-                        addRow(eventContainer, [""].concat(rows[0].map((event) => event ? formatEventWeekHeader(event) : "")), 1);
                         rows.forEach(events_list => {
                             addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1, [""].concat(events_list));
                         });
