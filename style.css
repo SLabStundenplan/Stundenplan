@@ -15,7 +15,11 @@ label input {
 
 .noteInput {
   margin: auto;
+  display: grid;
+  justify-content: center;
+  text-align: center;
   width: 50%;
+  rows: 10;
   background-color: #444444;
 }
 
