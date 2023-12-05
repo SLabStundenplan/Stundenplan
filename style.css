@@ -14,7 +14,6 @@ label input {
 }
 
 .noteInput {
-  margin: auto;
   display: grid;
   justify-content: center;
   text-align: center;
