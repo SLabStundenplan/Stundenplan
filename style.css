@@ -13,6 +13,12 @@ label input {
     top: -100%;
 }
 
+.noteInput {
+  margin: auto;
+  width: 50%;
+  background-color: #44444;
+}
+
 
 button {
   color: F9F8F8;
