@@ -14,10 +14,12 @@ label textarea {
 }
 
 .noteInput {
-  display: grid;
+  display: block;
   width: 70%;
   font-color: F9F8F8;
   rows: 10;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
