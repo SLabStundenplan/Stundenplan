@@ -119,6 +119,9 @@ function addRow(container, texts, colspan, data) {
                 selected_event = data[i];
                 refreshEvent();
             });
+            if(data[i].notes && data[i].notes.length > 0){
+                td.classList.add("noteAdded");
+            }
         }
         tr.appendChild(td);
       }
@@ -171,6 +174,7 @@ function noteInput(event){
     if(selected_event){
         selected_event.notes = event.target.value;
         localStorage.setItem("events", JSON.stringify(events));
+        refresh();
     }
 }
 
