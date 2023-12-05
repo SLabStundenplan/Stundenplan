@@ -108,6 +108,11 @@ function formatEventWeek(event) {
     return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
 }
 
+function formatEventWeekHeader(event) {
+    return `${pad(event.Start.getDate(), 2)}.${pad(event.Start.getMonth() + 1, 2)}.${pad(event.Start.getFullYear(), 2)}`;
+}
+
+
 function addRow(container, texts, colspan, data) {
     const tr = document.createElement("tr");
     for (let i = 0; i < texts.length; i++) {
@@ -223,6 +228,7 @@ function refresh() {
                 set_visible(headers);
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
+                    addRow(eventContainer, [""].concat(rows[0].map((event) => event ? formatEventWeekHeader(event) : "")), 1);
                     rows.forEach(events_list => {
                         addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1, [""].concat(events_list));
                     });
