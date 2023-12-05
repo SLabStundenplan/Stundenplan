@@ -223,16 +223,10 @@ function refresh() {
         "November",
         "Dezember"
       ];
-    var dayName = daysOfWeek[selected_date.getDay()];
 
     var dayHeader = document.getElementById("headerMonday");
     if (dayHeader) {
-        if (selected_view == "day"){
-            dayHeader.innerHTML = dayName;
-        } else {
-            dayHeader.innerHTML = daysOfWeek[1];
-        }
-        
+        dayHeader.innerHTML = daysOfWeek[selected_view == "day" ? selected_date.getDay() : 1];
     }
 
     switch (selected_view) {
@@ -240,7 +234,7 @@ function refresh() {
             document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
             break;
         case "week":
-            document.getElementById("labelSelectedDate").innerHTML = `${getCalendarWeek(selected_date)}KW`;
+            document.getElementById("labelSelectedDate").innerHTML = `${getCalendarWeek(selected_date)}.KW`;
             break;
         case "month":
             document.getElementById("labelSelectedDate").innerHTML = `${months[selected_date.getMonth()]}`;
@@ -296,13 +290,12 @@ function refresh() {
                 setHidden(["monthView"]);
                 set_visible(headers);
                 for (let i = 0; i < 5; i++) {
-                    if (i > 0) {
-                        addRow(eventContainer, [`Woche${i}`], 6);
-                    }
-                    let rows = getRows(addDay(selected_date, i * 7));
+                    let day = addDay(selected_date, i * 7);
+                    addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 6);
+                    let rows = getRows(day);
                     if (rows.length > 0) {
+                        addRow(eventContainer, [""].concat(rows[0].map((event) => event ? formatEventWeekHeader(event) : "")), 1);
                         rows.forEach(events_list => {
-                            9
                             addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1, [""].concat(events_list));
                         });
                     } else {
