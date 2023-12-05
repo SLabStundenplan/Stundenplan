@@ -8,7 +8,7 @@ body {
 }
 
 
-label input {
+label textarea {
     position: fixed;
     top: -100%;
 }
@@ -16,10 +16,7 @@ label input {
 .noteInput {
   display: grid;
   justify-content: center;
-  text-align: center;
-  width: 50%;
-  rows: 10;
-  background-color: #444444;
+  
 }
 
 
