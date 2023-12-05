@@ -36,3 +36,7 @@ button a {
 td:hover.noteAdded {
   background-color: #6495ED;
 }
+
+td:hover.noteRemoved {
+  background-color: 595959;
+}
