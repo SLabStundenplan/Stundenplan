@@ -112,6 +112,27 @@ function formatEventWeekHeader(event) {
     return `${pad(event.Start.getDate(), 2)}.${pad(event.Start.getMonth() + 1, 2)}.${pad(event.Start.getFullYear(), 2)}`;
 }
 
+function getCalendarWeek(date) {
+    // Copy the date to avoid modifying the original date object
+    const currentDate = new Date(date);
+
+    // Set the date to the first day of the year
+    currentDate.setMonth(0, 1);
+
+    // Get the day of the week for January 1st
+    const dayOfWeek = currentDate.getDay();
+
+    // Calculate the number of days to add to reach the first Thursday of the year
+    const daysToAdd = (dayOfWeek <= 4) ? 4 - dayOfWeek : 11 - dayOfWeek;
+
+    // Move to the first Thursday of the year
+    currentDate.setDate(currentDate.getDate() + daysToAdd);
+
+    // Calculate the week number
+    const weekNumber = Math.ceil((date - currentDate) / (7 * 24 * 60 * 60 * 1000)) + 1;
+
+    return weekNumber;
+}
 
 function addRow(container, texts, colspan, data) {
     const tr = document.createElement("tr");
@@ -119,19 +140,19 @@ function addRow(container, texts, colspan, data) {
         const td = document.createElement("td");
         td.setAttribute('colspan', colspan);
         td.innerHTML = texts[i];
-        if (data && data[i]){
-            td.addEventListener('click', (e) =>{
+        if (data && data[i]) {
+            td.addEventListener('click', (e) => {
                 selected_event = data[i];
                 refreshEvent();
             });
-            if(data[i].notes && data[i].notes.length > 0){
+            if (data[i].notes && data[i].notes.length > 0) {
                 td.classList.add("noteAdded");
-            } else{
+            } else {
                 td.classList.add("noteRemoved");
             }
         }
         tr.appendChild(td);
-      }
+    }
     container.appendChild(tr);
 }
 
@@ -162,23 +183,23 @@ function set_visible(element_ids) {
     });
 }
 
-function refreshEvent(){
+function refreshEvent() {
     var dayHeader = document.getElementById("headerNotes");
     if (dayHeader) {
-        dayHeader.innerHTML =  `Notizen für ${formatTitle(selected_event.Titel)} ${pad(selected_event.Start.getDate(), 2)}.${pad(selected_event.Start.getMonth() + 1, 2)}.${pad(selected_event.Start.getFullYear(), 2)} ${pad(selected_event.Start.getHours(), 2)}.${pad(selected_event.Start.getMinutes(), 2)} - ${pad(selected_event.Ende.getHours(), 2)}.${pad(selected_event.Ende.getMinutes(), 2)}`;
+        dayHeader.innerHTML = `Notizen für ${formatTitle(selected_event.Titel)} ${pad(selected_event.Start.getDate(), 2)}.${pad(selected_event.Start.getMonth() + 1, 2)}.${pad(selected_event.Start.getFullYear(), 2)} ${pad(selected_event.Start.getHours(), 2)}.${pad(selected_event.Start.getMinutes(), 2)} - ${pad(selected_event.Ende.getHours(), 2)}.${pad(selected_event.Ende.getMinutes(), 2)}`;
     }
     var inputNotes = document.getElementById("inputNotes");
-    if (inputNotes){
-        if(selected_event.notes){
+    if (inputNotes) {
+        if (selected_event.notes) {
             inputNotes.value = selected_event.notes;
         } else {
             inputNotes.value = "";
         }
-        
+
     }
 }
-function noteInput(event){
-    if(selected_event){
+function noteInput(event) {
+    if (selected_event) {
         selected_event.notes = event.target.value;
         localStorage.setItem("events", JSON.stringify(events));
         refresh();
@@ -188,14 +209,47 @@ function noteInput(event){
 function refresh() {
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    var months = [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+      ];
     var dayName = daysOfWeek[selected_date.getDay()];
 
-    var dayHeader = document.getElementById("DayHeader");
+    var dayHeader = document.getElementById("headerMonday");
     if (dayHeader) {
-        dayHeader.innerHTML = dayName;
+        if (selected_view == "day"){
+            dayHeader.innerHTML = dayName;
+        } else {
+            dayHeader.innerHTML = daysOfWeek[1];
+        }
+        
     }
 
-    document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
+    switch (selected_view) {
+        case "day":
+            document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
+            break;
+        case "week":
+            document.getElementById("labelSelectedDate").innerHTML = `${getCalendarWeek(selected_date)}KW`;
+            break;
+        case "month":
+            document.getElementById("labelSelectedDate").innerHTML = `${months[selected_date.getMonth()]}`;
+            break;
+        default:
+            break;
+    }
+
+   
     let eventContainer = document.getElementById("eventContainer");
     if (eventContainer === null) {
         return;
@@ -247,7 +301,8 @@ function refresh() {
                     }
                     let rows = getRows(addDay(selected_date, i * 7));
                     if (rows.length > 0) {
-                        rows.forEach(events_list => {9
+                        rows.forEach(events_list => {
+                            9
                             addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1, [""].concat(events_list));
                         });
                     } else {
