@@ -11,11 +11,14 @@ body {
 textarea {
   display: block;
   width: 70%;
-  font-color: F9F8F8;
+  background-color: #44444;
+  color: F9F8F8;
   rows: 10;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   top: -100%;
+  rezise: none;
 }
 
 button {
