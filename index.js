@@ -105,7 +105,26 @@ function formatEventDay(event) {
 }
 
 function formatEventWeek(event) {
-    return `${formatTitle(event.Titel)} <br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
+    return `${formatTitle(event.Titel)} ${getType(event)}<br> ${pad(event.Start.getHours(), 2)}.${pad(event.Start.getMinutes(), 2)} - ${pad(event.Ende.getHours(), 2)}.${pad(event.Ende.getMinutes(), 2)}`;
+}
+
+function getType(event) {
+    if (event.Beschreibung) {
+        let type = event.Beschreibung;
+        let index = type.indexOf("|");
+        if (index != -1 && type.length > index + 2) {
+            type = type.substring(index + 2, index + 3);
+            switch (type) {
+                case "V":
+                    return "(Vorlesung)";
+                case "P":
+                    return "(Praktikum)";
+                default:
+                    break;
+            }
+        }
+    }
+    return "";
 }
 
 function formatDate(date) {
@@ -222,28 +241,33 @@ function refresh() {
         "Oktober",
         "November",
         "Dezember"
-      ];
+    ];
 
     var dayHeader = document.getElementById("headerMonday");
     if (dayHeader) {
         dayHeader.innerHTML = daysOfWeek[selected_view == "day" ? selected_date.getDay() : 1];
     }
 
+    var title = "";
     switch (selected_view) {
         case "day":
-            document.getElementById("labelSelectedDate").innerHTML = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
+            title = `${pad(selected_date.getDate(), 2)}.${pad(selected_date.getMonth() + 1, 2)}.${pad(selected_date.getFullYear(), 2)}`;
             break;
         case "week":
-            document.getElementById("labelSelectedDate").innerHTML = `${getCalendarWeek(selected_date)}.KW`;
+            title = `${getCalendarWeek(selected_date)}.KW`;
             break;
         case "month":
-            document.getElementById("labelSelectedDate").innerHTML = `${months[selected_date.getMonth()]}`;
+            title = `${months[selected_date.getMonth()]}`;
             break;
         default:
             break;
     }
 
-   
+    let labelSelectedDate = document.getElementById("labelSelectedDate");
+    if(labelSelectedDate){
+        labelSelectedDate.innerHTML = title;
+    }
+
     let eventContainer = document.getElementById("eventContainer");
     if (eventContainer === null) {
         return;
@@ -276,7 +300,7 @@ function refresh() {
                 set_visible(headers);
 
                 let monday = getMonday(selected_date);
-                addRow(eventContainer, [""].concat([0,1,2,3,4,].map((i) => formatDate(addDay(monday, i)))), 1);
+                addRow(eventContainer, [""].concat([0, 1, 2, 3, 4,].map((i) => formatDate(addDay(monday, i)))), 1);
 
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
@@ -296,7 +320,7 @@ function refresh() {
                     let day = addDay(selected_date, i * 7);
                     addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 6);
                     let monday = getMonday(day);
-                    addRow(eventContainer, [""].concat([0,1,2,3,4].map((i) => formatDate(addDay(monday, i)))), 1);
+                    addRow(eventContainer, [""].concat([0, 1, 2, 3, 4].map((i) => formatDate(addDay(monday, i)))), 1);
 
                     let rows = getRows(day);
                     if (rows.length > 0) {
