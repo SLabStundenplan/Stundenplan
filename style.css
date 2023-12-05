@@ -28,3 +28,7 @@ button a {
 td:hover {
   background-color: #444444;
 }
+
+.noteAdded {
+ background-color: red;
+}
