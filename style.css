@@ -25,16 +25,12 @@ button a {
   color: F9F8F8;
 }
 
-td:hover {
-  background-color: #444444;
-}
-
 .noteAdded {
   background-color: #1E90FF;
 }
 
 .noteRemoved {
-  background-color: #4B0082;
+  background-color: #444444;
 }
 
 td:hover.noteAdded {
