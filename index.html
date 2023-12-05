@@ -15,6 +15,24 @@
     </header>
 
     <nav id="navibereich">
+          <h3 id="csvdateineinlesen"> CSV Datei einlesen</h3>
+
+        <label>
+            CSV Öffnen
+            <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
+        </label>
+        <button onclick="change(-1)">&lt;</button>
+        <label id="labelSelectedDate"></label>
+        <button onclick="change(1)">></button>
+        <div id="eventContainer"></div>
+
+        <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
+        <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
+        <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
+
+        <h3 id="headerNotes"> Notizen </h3>
+        <br>
+        <input id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
     </nav>
 
     <main id="hauptbereich">
@@ -35,27 +53,6 @@
             <tfoot>
             </tfoot>
         </table>
-
-        <h3 id="csvdateineinlesen"> CSV Datei einlesen</h3>
-
-        <label>
-            CSV Öffnen
-            <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
-        </label>
-        <button onclick="change(-1)">&lt;</button>
-        <label id="labelSelectedDate"></label>
-        <button onclick="change(1)">></button>
-        <div id="eventContainer"></div>
-
-        <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
-        <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
-        <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
-
-        <h3 id="headerNotes"> Notizen </h3>
-        <br>
-        <br>
-        <br>
-        <input id="inputNotes" type="text" oninput="noteInput(event)" placeholder="Notizen Eingabe">
 
     </main>
     <footer>
