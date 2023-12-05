@@ -11,6 +11,9 @@ body {
 label input {
     position: fixed;
     top: -100%;
+    width: 1000px;
+    heigth: 300px;
+    background-color: #444444;
 }
 
 
