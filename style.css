@@ -33,6 +33,10 @@ td:hover {
   background-color: #1E90FF;
 }
 
+.noteRemoved {
+  background-color: #4B0082;
+}
+
 td:hover.noteAdded {
   background-color: #6495ED;
 }
