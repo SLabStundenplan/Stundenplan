@@ -9,7 +9,7 @@
     </script>
     <link rel="stylesheet" href="./style.css">
     <style>
-        
+
     </style>
 </head>
 
@@ -41,13 +41,14 @@
             <div class="wrapper"> 
                 <h2>Termin erstellen</h2>
                 <form> 
-                    <input type="Datum auswählen"> 
+                    <input placeholder="Termin hinzufügen"> 
                     </input> 
                         <br> 
-                    <input type="Termin">
+                    <input type="datetime-local" id="addate" name="Zeit hinzufügen">
                     </input> 
-                        <br> 
-                    <button>Termin erstellen</button>
+                        <br>
+
+                    <button onclick=createEvent()> Termin erstellen</button>
                     <button onclick=closeLoginDialog(false) type="button">Cancel</button> 
                 </form>
             </div> 
