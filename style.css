@@ -25,6 +25,17 @@ textarea {
   resize: none;
 }
 
+.ansicht {
+  display: block;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+dialog {
+  background-color: #444444;
+}
+
 table {
     width: 80%;
     margin-left: auto;
