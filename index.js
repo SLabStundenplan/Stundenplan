@@ -119,6 +119,8 @@ function getType(event) {
                     return "(Vorlesung)";
                 case "P":
                     return "(Praktikum)";
+                case "Ü":
+                    return "(Übung)";
                 default:
                     break;
             }
@@ -288,10 +290,10 @@ function refresh() {
                 if (eventsToday) {
                     eventsToday.sort((a, b) => a.Start.getTime() - b.Start.getTime());
                     eventsToday.forEach(event => {
-                        addRow(eventContainer, ["", formatEventDay(event)], 1, [undefined, event]);
+                        addRow(eventContainer, [formatEventDay(event)], 1, [event]);
                     });
                 } else {
-                    addRow(eventContainer, [`keine Termine ...`], 2);
+                    addRow(eventContainer, [`keine Termine ...`], 1);
                 }
                 break;
             case "week":
@@ -300,15 +302,15 @@ function refresh() {
                 set_visible(headers);
 
                 let monday = getMonday(selected_date);
-                addRow(eventContainer, [""].concat([0, 1, 2, 3, 4,].map((i) => formatDate(addDay(monday, i)))), 1);
+                addRow(eventContainer, [0, 1, 2, 3, 4,].map((i) => formatDate(addDay(monday, i))), 1);
 
                 let rows = getRows(selected_date);
                 if (rows.length > 0) {
                     rows.forEach(events_list => {
-                        addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatEventWeek(event) : "")), 1, [""].concat(events_list));
+                        addRow(eventContainer, events_list.map((event) => event ? formatEventWeek(event) : ""), 1, events_list);
                     });
                 } else {
-                    addRow(eventContainer, [`keine Termine ...`], 6);
+                    addRow(eventContainer, [`keine Termine ...`], 5);
                 }
 
                 break;
@@ -318,17 +320,17 @@ function refresh() {
                 set_visible(headers);
                 for (let i = 0; i < 5; i++) {
                     let day = addDay(selected_date, i * 7);
-                    addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 6);
+                    addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 5);
                     let monday = getMonday(day);
-                    addRow(eventContainer, [""].concat([0, 1, 2, 3, 4].map((i) => formatDate(addDay(monday, i)))), 1);
+                    addRow(eventContainer, [0, 1, 2, 3, 4].map((i) => formatDate(addDay(monday, i))), 1);
 
                     let rows = getRows(day);
                     if (rows.length > 0) {
                         rows.forEach(events_list => {
-                            addRow(eventContainer, [""].concat(events_list.map((event) => event ? formatTitle(event.Titel) : "")), 1, [""].concat(events_list));
+                            addRow(eventContainer, events_list.map((event) => event ? formatTitle(event.Titel) : ""), 1, events_list);
                         });
                     } else {
-                        addRow(eventContainer, [`keine Termine ...`], 6);
+                        addRow(eventContainer, [`keine Termine ...`], 5);
                     }
                 }
                 break;
