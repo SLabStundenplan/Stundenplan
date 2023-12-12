@@ -28,9 +28,11 @@
             CSV Öffnen
             <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
         </label>
+        <p class="Ansicht">
         <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
         <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
         <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
+        </p>
         <br>
         
         <button onclick=showLoginDialog(true)> Termin hinzufügen </button>
