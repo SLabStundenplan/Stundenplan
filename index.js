@@ -18,6 +18,10 @@ if (events) {
 
 window.onload = refresh;
 
+function createEvent(){
+    console.log("create Event");
+}
+
 function change(i) {
     switch (selected_view) {
         case "day":
