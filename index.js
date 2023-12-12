@@ -18,7 +18,7 @@ if (events) {
 
 window.onload = refresh;
 
-function createEvent(){
+function createNewEvent(){
     console.log("create Event");
 }
 
