@@ -5,6 +5,7 @@ body {
 
 * {
   font-family: 'Comic Sans MS', sans-serif, cursive;
+    margin:0;
 }
 
 input {
