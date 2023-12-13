@@ -1,6 +1,6 @@
 body {
     background-color: #303030;
-    color: F9F8F8;
+    color: #F9F8F8;
 }
 
 * {
@@ -17,7 +17,7 @@ textarea {
   display: block;
   width: 80%;
   background-color: #444444;
-  color: F9F8F8;
+  color: #F9F8F8;
   height: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -27,7 +27,7 @@ textarea {
 
 body {
     background-color: #303030;
-    color: F9F8F8;
+    color: #F9F8F8;
 }
 
 * {
@@ -44,7 +44,7 @@ textarea {
   display: block;
   width: 80%;
   background-color: #444444;
-  color: F9F8F8;
+  color: #F9F8F8;
   height: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -79,14 +79,14 @@ table {
 
 
 button {
-  color: F9F8F8;
+  color: #F9F8F8;
   border: 1px solid transparent;
   background-color: transparent;
 }
 
 button a {
   text-decoration: none;
-  color: F9F8F8;
+  color: #F9F8F8;
 }
 
 .noteAdded {
@@ -118,14 +118,14 @@ table {
 
 
 button {
-  color: F9F8F8;
+  color: #F9F8F8;
   border: 1px solid transparent;
   background-color: transparent;
 }
 
 button a {
   text-decoration: none;
-  color: F9F8F8;
+  color: #F9F8F8;
 }
 
 .noteAdded {
@@ -152,7 +152,7 @@ td:hover.noteRemoved {
 }
 #dayView, #weekView, #monthView {
   background-color: #444444;
-  width: 100%;
+  width: 25%;
   box-shadow: 0 8px 6px -6px black;
 }
 
