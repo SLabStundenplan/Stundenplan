@@ -181,6 +181,15 @@ function addRow(container, texts, colspan, data) {
     container.appendChild(tr);
 }
 
+function setText(element_ids, text) {
+    element_ids.forEach(element_id => {
+        let element = document.getElementById(element_id);
+        if (element){
+            element.innerHTML = text;
+        }
+    });
+}
+
 function setHidden(element_ids) {
     element_ids.forEach(element_id => {
         document.getElementById(element_id).style.visibility = 'hidden';
@@ -287,8 +296,9 @@ function refresh() {
             "headerFriday"];
         switch (selected_view) {
             case "day":
-                setVisible(["weekView", "monthView"]);
-                setHidden(["dayView"]);
+                setText(["monthView"], "Monats Ansicht");
+                setText(["weekView"], "Wochen Ansicht");
+                setText(["dayView"], "> Tages Ansicht <");
                 set_invisible(headers);
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
@@ -301,8 +311,9 @@ function refresh() {
                 }
                 break;
             case "week":
-                setVisible(["dayView", "monthView"]);
-                setHidden(["weekView"]);
+                setText(["monthView"], "Monats Ansicht");
+                setText(["weekView"], "> Wochen Ansicht <");
+                setText(["dayView"], "Tages Ansicht");
                 set_visible(headers);
 
                 let monday = getMonday(selected_date);
@@ -319,8 +330,9 @@ function refresh() {
 
                 break;
             case "month":
-                setVisible(["dayView", "weekView"]);
-                setHidden(["monthView"]);
+                setText(["monthView"], "> Monats Ansicht <");
+                setText(["weekView"], "Wochen Ansicht");
+                setText(["dayView"], "Tages Ansicht");
                 set_visible(headers);
                 for (let i = 0; i < 5; i++) {
                     let day = addDay(selected_date, i * 7);
