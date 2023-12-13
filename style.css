@@ -143,3 +143,25 @@ td:hover.noteAdded {
 td:hover.noteRemoved {
   background-color: #595959;
 }
+
+#dayView:hover:not(.selected), #weekView:hover:not(.selected), #monthView:hover:not(.selected) {
+  background-color: #595959;
+}
+#dayView.selected, #weekView.selected, #monthView.selected {
+  box-shadow: inset 0 8px 6px -6px black;
+}
+#dayView, #weekView, #monthView {
+  background-color: #444444;
+  width: 100%;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+#dayView {
+  border-radius: 10px 0 0 10px;
+  margin-left: 5%;
+}
+
+#monthView {
+  border-radius: 0 10px 10px 0;
+  margin-right: 5%;
+}

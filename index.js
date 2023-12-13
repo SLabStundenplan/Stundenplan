@@ -190,6 +190,23 @@ function setText(element_ids, text) {
     });
 }
 
+function setClass(element_ids, text) {
+    element_ids.forEach(element_id => {
+        let element = document.getElementById(element_id);
+        if (element){
+            element.classList.add(text);
+        }
+    });
+}
+function removeClass(element_ids, text) {
+    element_ids.forEach(element_id => {
+        let element = document.getElementById(element_id);
+        if (element){
+            element.classList.remove(text);
+        }
+    });
+}
+
 function setHidden(element_ids) {
     element_ids.forEach(element_id => {
         document.getElementById(element_id).style.visibility = 'hidden';
@@ -299,6 +316,8 @@ function refresh() {
                 setText(["monthView"], "Monats Ansicht");
                 setText(["weekView"], "Wochen Ansicht");
                 setText(["dayView"], "> Tages Ansicht <");
+                removeClass(["monthView","weekView"], "selected");
+                setClass(["dayView"], "selected");
                 set_invisible(headers);
                 let eventsToday = events[getDayKey(selected_date)];
                 if (eventsToday) {
@@ -314,6 +333,8 @@ function refresh() {
                 setText(["monthView"], "Monats Ansicht");
                 setText(["weekView"], "> Wochen Ansicht <");
                 setText(["dayView"], "Tages Ansicht");
+                removeClass(["dayView","monthView"], "selected");
+                setClass(["weekView"], "selected");
                 set_visible(headers);
 
                 let monday = getMonday(selected_date);
@@ -333,6 +354,8 @@ function refresh() {
                 setText(["monthView"], "> Monats Ansicht <");
                 setText(["weekView"], "Wochen Ansicht");
                 setText(["dayView"], "Tages Ansicht");
+                removeClass(["dayView","weekView"], "selected");
+                setClass(["monthView"], "selected");
                 set_visible(headers);
                 for (let i = 0; i < 5; i++) {
                     let day = addDay(selected_date, i * 7);
