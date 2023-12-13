@@ -1,6 +1,6 @@
 let selected_date = new Date();
 let selected_view = "day";
-let selected_event = undefined;
+let selected_event = "week";
 let events = JSON.parse(localStorage.getItem("events"));
 if (events) {
     Object.keys(events).forEach(key => {
@@ -170,7 +170,7 @@ function addRow(container, texts, colspan, data) {
                 selected_event = data[i];
                 refreshEvent();
             });
-            if (data[i].notes && data[i].notes.length > 0) {
+            if (data[i].notes) {
                 td.classList.add("noteAdded");
             } else {
                 td.classList.add("noteRemoved");
@@ -239,19 +239,13 @@ function refreshEvent() {
     if (dayHeader) {
         dayHeader.innerHTML = `Notizen für ${formatTitle(selected_event.Titel)} ${pad(selected_event.Start.getDate(), 2)}.${pad(selected_event.Start.getMonth() + 1, 2)}.${pad(selected_event.Start.getFullYear(), 2)} ${pad(selected_event.Start.getHours(), 2)}.${pad(selected_event.Start.getMinutes(), 2)} - ${pad(selected_event.Ende.getHours(), 2)}.${pad(selected_event.Ende.getMinutes(), 2)}`;
     }
-    var inputNotes = document.getElementById("inputNotes");
-    if (inputNotes) {
-        if (selected_event.notes) {
-            inputNotes.value = selected_event.notes;
-        } else {
-            inputNotes.value = "";
-        }
-
-    }
+    quill.setContents(selected_event.notes);
 }
 function noteInput(event) {
+    
     if (selected_event) {
-        selected_event.notes = event.target.value;
+        var length = quill.getLength();
+        selected_event.notes = length > 1 ? quill.getContents() : undefined;
         localStorage.setItem("events", JSON.stringify(events));
         refresh();
     }
@@ -313,9 +307,9 @@ function refresh() {
             "headerFriday"];
         switch (selected_view) {
             case "day":
-                setText(["monthView"], "Monats Ansicht");
-                setText(["weekView"], "Wochen Ansicht");
-                setText(["dayView"], "> Tages Ansicht <");
+                //setText(["monthView"], "Monats Ansicht");
+                //setText(["weekView"], "Wochen Ansicht");
+                //setText(["dayView"], "> Tages Ansicht <");
                 removeClass(["monthView","weekView"], "selected");
                 setClass(["dayView"], "selected");
                 set_invisible(headers);
@@ -330,9 +324,9 @@ function refresh() {
                 }
                 break;
             case "week":
-                setText(["monthView"], "Monats Ansicht");
-                setText(["weekView"], "> Wochen Ansicht <");
-                setText(["dayView"], "Tages Ansicht");
+                //setText(["monthView"], "Monats Ansicht");
+                //setText(["weekView"], "> Wochen Ansicht <");
+                //setText(["dayView"], "Tages Ansicht");
                 removeClass(["dayView","monthView"], "selected");
                 setClass(["weekView"], "selected");
                 set_visible(headers);
@@ -351,9 +345,9 @@ function refresh() {
 
                 break;
             case "month":
-                setText(["monthView"], "> Monats Ansicht <");
-                setText(["weekView"], "Wochen Ansicht");
-                setText(["dayView"], "Tages Ansicht");
+                //setText(["monthView"], "> Monats Ansicht <");
+                //setText(["weekView"], "Wochen Ansicht");
+                //setText(["dayView"], "Tages Ansicht");
                 removeClass(["dayView","weekView"], "selected");
                 setClass(["monthView"], "selected");
                 set_visible(headers);
