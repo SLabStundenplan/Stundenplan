@@ -4,7 +4,12 @@
 <head>
     <meta charset="utf-8">
     <title>Stundenplan</title>
-    <script src="./index.js"></script>
+    <script src="./js/csv.js"></script>
+    <script src="./js/date.js"></script>
+    <script src="./js/dbclient.js"></script>
+    <script src="./js/format.js"></script>
+    <script src="./js/html.js"></script>
+    <script src="./js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
         integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -39,7 +44,7 @@
 
         <label>
             CSV Öffnen
-            <input type="file" accept=".csv, .ics" onchange="openCsv(event)">
+            <input id="csvInput" type="file" accept=".csv, .ics" onchange="openCsv(event)">
         </label>
         <p class="Ansicht">
             <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
@@ -50,7 +55,7 @@
 
         <button onclick=showLoginDialog(true)> Termin hinzufügen </button>
 
-        <dialog id="login-dialog">
+        <dialog id="add-dialog">
             <div class="wrapper">
                 <h2>Termin erstellen</h2>
                 <input placeholder="Termin hinzufügen">
@@ -66,19 +71,41 @@
         </dialog>
 
         <script>
-            const dialog = document.getElementById("login-dialog")
+            const dialog = document.getElementById("add-dialog")
             const wrapper = document.querySelector(".wrapper")
 
             const showLoginDialog = (show) => show ? dialog.showModal() : dialog.close()
             dialog.addEventListener('click', (e) => !wrapper.contains(e.target) && dialog.close())
         </script>
 
+        <button onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
+        <dialog id="signin-dialog">
+            <label>Email</label><br>
+            <input type="text" id="signin-email" name="email" /><br>
+            <label>Password</label><br>
+            <input type="password" id="signin-password" name="password" /><br>
+            <label id="signin-error"></label><br>
+            <button onclick="signin()">sign in</button>
+            <button onclick="document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML='';">cancel</button>
+        </dialog>
+        <button onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
+        <dialog id="signup-dialog">
+            <label>Name</label><br>
+            <input type="text" id="signup-name" name="name" /><br>
+            <label>Email</label><br>
+            <input type="text" id="signup-email" name="email" /><br>
+            <label>Password</label><br>
+            <input type="password" id="signup-password" name="password" /><br>
+            <label id="signup-error"></label><br>
+            <button onclick="signup()">sign up</button>
+            <button onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
+        </dialog>
+
         <br>
 
         <table border="1">
             <thead>
                 <tr>
-
                     <th id="headerMonday"> Montag </th>
                     <th id="headerTuesday"> Dienstag</th>
                     <th id="headerWednesday"> Mittwoch </th>

@@ -8,11 +8,6 @@ body {
     margin:0;
 }
 
-input {
-    position: fixed;
-    top: -100%;
-}
-
 textarea {
   display: block;
   width: 80%;
@@ -35,7 +30,7 @@ body {
     margin:0;
 }
 
-input {
+#csvInput  {
     position: fixed;
     top: -100%;
 }
