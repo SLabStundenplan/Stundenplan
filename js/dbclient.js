@@ -3,72 +3,70 @@ let user = undefined;
 let url = "https://stundenplan-agzpj.ondigitalocean.app";
 
 
-function insertEvents(events) {
+async function insertEvents(events) {
     let query = events.map(ev => {
         try {
             return `CREATE event SET title = '${formatTextForDB(ev.title)}', location = '${formatTextForDB(ev.location)}', start = '${ev.start.toISOString()}', end = '${ev.end.toISOString()}', description = '${formatTextForDB(ev.description)}', user_id = '${user.id}';\n`;
         } catch (error) { return ""; }
     }).join('');
-    executeSql(query);
+    await executeSql(query);
     console.log("ready");
 }
 
-function setUser() {
+async function setUser() {
     let query = `
     SELECT id, name FROM user`;
-    executeSql(query, users => {
-       user = users[0];
-       console.log(user);
-    });
+    let users = await executeSql(query);
+    if (users){
+        user = user = users[0];
+        console.log(user);
+    }
 }
 
-function getEvents(start, end, callback) {
+async function getEvents(start, end) {
     let query = `
     SELECT *, time::group(start, "day") as day
     FROM event 
     WHERE time::group(start, "day") >= time::group("${start.toISOString()}", "day") 
     AND time::group(start, "day") <= time::group("${end.toISOString()}", "day")
     ORDER BY start`;
-    executeSql(query, events => {
+    let events = await executeSql(query);
+    if (events){
         events.forEach(event => {
             event.start = new Date(event.start);
             event.end = new Date(event.end);
             event.day = new Date(event.day);
         });
-        callback(events);
-    });
+    }
+    return events;
 }
 
-function executeSql(query, callback) {
-    if(token){
-    fetch(`${url}/sql`, {
-        method: "POST",
-        body: query,
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "Accept": "application/json",
-            "NS": "test",
-            "DB": "test",
-            "Authorization": `Bearer ${token}`
-        }
-    }).then((response) => {
+async function executeSql(query) {
+    if (token) {
+        let response = await fetch(`${url}/sql`, {
+            method: "POST",
+            body: query,
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Accept": "application/json",
+                "NS": "test",
+                "DB": "test",
+                "Authorization": `Bearer ${token}`
+            }
+        });
         switch (response.status) {
             case 200:
-                if (callback) {
-                    response.json().then((json) => {
-                        callback(json[0].result);
-                    });
-                }
-                break;
+                let json = await response.json();
+                return json[0].result;
             default:
                 console.log("fail");
-                break;
+                return undefined;
         }
-    });}
+    }
 }
 
-function signin() {
-    fetch(`${url}/signin`, {
+async function signin() {
+    let response = await fetch(`${url}/signin`, {
         method: "POST",
         body: JSON.stringify({
             NS: "test",
@@ -81,26 +79,25 @@ function signin() {
             "Content-type": "application/json; charset=UTF-8",
             "Accept": "application/json"
         }
-    }).then((response) => {
-        switch (response.status) {
-            case 200:
-                response.json().then((json) => {
-                    token = json.token;
-                    document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
-                    setUser();
-                });
-                break;
-            case 400:
-                document.getElementById('signin-error').innerHTML = 'falsche Email oder falsches Password';
-                break;
-            default:
-                document.getElementById('signin-error').innerHTML = 'etwas ist schief gegangen';
-                break;
-        }
     });
+    switch (response.status) {
+        case 200:
+            let json = await response.json();
+            token = json.token;
+            document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
+            await setUser();
+            await refresh();
+            break;
+        case 400:
+            document.getElementById('signin-error').innerHTML = 'falsche Email oder falsches Password';
+            break;
+        default:
+            document.getElementById('signin-error').innerHTML = 'etwas ist schief gegangen';
+            break;
+    }
 }
-function signup() {
-    fetch(`${url}/signup`, {
+async function signup() {
+    let response = await fetch(`${url}/signup`, {
         method: "POST",
         body: JSON.stringify({
             NS: "test",
@@ -114,23 +111,22 @@ function signup() {
             "Content-type": "application/json; charset=UTF-8",
             "Accept": "application/json"
         }
-    }).then((response) => {
-        switch (response.status) {
-            case 200:
-                response.json().then((json) => {
-                    token = json.token;
-                    document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML = '';
-                    setUser();
-                });
-                break;
-            case 400:
-                document.getElementById('signup-error').innerHTML = 'ungültige Email';
-                break;
-            default:
-                document.getElementById('signup-error').innerHTML = 'etwas ist schief gegangen';
-                break;
-        }
     });
+    switch (response.status) {
+        case 200:
+            let json = await response.json();
+            token = json.token;
+            document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
+            await setUser();
+            await refresh();
+            break;
+        case 400:
+            document.getElementById('signup-error').innerHTML = 'ungültige Email';
+            break;
+        default:
+            document.getElementById('signup-error').innerHTML = 'etwas ist schief gegangen';
+            break;
+    }
 }
 
 function formatTextForDB(text) {

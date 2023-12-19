@@ -103,7 +103,7 @@ function noteInput(event) {
     }
 }
 
-function refresh() {
+async function refresh() {
     
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -163,7 +163,8 @@ function refresh() {
                 removeClass(["monthView", "weekView"], "selected");
                 setClass(["dayView"], "selected");
                 set_invisible(headers);
-                getEvents(selected_date, selected_date, eventsToday => {
+                let eventsToday = await getEvents(selected_date, selected_date);
+                if (eventsToday){
                     if (eventsToday.length > 0) {
                         eventsToday.forEach(event => {
                             addRow(eventContainer, [formatEventDay(event)], 1, [event]);
@@ -171,9 +172,9 @@ function refresh() {
                     } else {
                         addRow(eventContainer, [`keine Termine ...`], 1);
                     }
-                });
-
-
+                } else {
+                    addRow(eventContainer, [`please sign in / sign up`], 1);
+                }
                 break;
             case "week":
                 removeClass(["dayView", "monthView"], "selected");
@@ -183,8 +184,9 @@ function refresh() {
                 let monday = getMonday(selected_date);
                 addRow(eventContainer, [0, 1, 2, 3, 4,].map((i) => formatDate(addDay(monday, i))), 1);
                 
-                getEvents(monday, addDay(monday, 6), events => {
-                    let groups = groupBy(events, e => getDayKey(e.day));
+                let week_events = await getEvents(monday, addDay(monday, 6));
+                if (week_events){
+                    let groups = groupBy(week_events, e => getDayKey(e.day));
                     let rows = getRows(selected_date, groups);
                     if (rows.length > 0) {
                         rows.forEach(events_list => {
@@ -193,16 +195,18 @@ function refresh() {
                     } else {
                         addRow(eventContainer, [`keine Termine ...`], 5);
                     }
-                });
-                
+                } else {
+                    addRow(eventContainer, [`please sign in / sign up`], 5);
+                }
                 break;
             case "month":
                 removeClass(["dayView", "weekView"], "selected");
                 setClass(["monthView"], "selected");
                 set_visible(headers);
                 let first_monday = getMonday(selected_date);
-                getEvents(first_monday, addDay(first_monday, 5*7), events => {
-                    let groups = groupBy(events, e => getDayKey(e.day));
+                let month_events = await getEvents(first_monday, addDay(first_monday, 5*7));
+                if (month_events){
+                    let groups = groupBy(month_events, e => getDayKey(e.day));
 
                     for (let i = 0; i < 5; i++) {
                         let day = addDay(selected_date, i * 7);
@@ -219,8 +223,9 @@ function refresh() {
                             addRow(eventContainer, [`keine Termine ...`], 5);
                         }
                     }
-                });
-                
+                } else {
+                    addRow(eventContainer, [`please sign in / sign up`], 5);
+                }
                 break;
             default:
                 break;
