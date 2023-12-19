@@ -19,10 +19,10 @@ function openCsv(event) {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = async function (e) {
             var events = parseCsv(e.target.result);
-            insertEvents(events);
-            //refresh();
+            await insertEvents(events);
+            await refresh();
         };
         reader.readAsText(selectedFile);
     }
