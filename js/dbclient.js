@@ -6,11 +6,17 @@ let url = "https://stundenplan-agzpj.ondigitalocean.app";
 async function insertEvents(events) {
     let query = events.map(ev => {
         try {
-            return `CREATE event SET title = '${formatTextForDB(ev.title)}', location = '${formatTextForDB(ev.location)}', start = '${ev.start.toISOString()}', end = '${ev.end.toISOString()}', description = '${formatTextForDB(ev.description)}', user_id = '${user.id}';\n`;
+            return `CREATE event SET title = '${formatTextForDB(ev.title)}', location = '${formatTextForDB(ev.location)}', start = '${ev.start.toISOString()}', end = '${ev.end.toISOString()}', description = '${formatTextForDB(ev.description)}', user_id = '${user.id}', notes = '';\n`;
         } catch (error) { return ""; }
     }).join('');
     await executeSql(query);
     console.log("ready");
+}
+
+async function updateNotes(event_id, notes) {
+    let query = `
+    UPDATE ${event_id} SET notes = '${formatTextForDB(notes)}' RETURN NONE;`;
+    await executeSql(query);
 }
 
 async function setUser() {
