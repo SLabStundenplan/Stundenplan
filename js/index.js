@@ -70,6 +70,7 @@ function addRow(container, texts, colspan, data) {
         td.setAttribute('colspan', colspan);
         td.innerHTML = texts[i];
         if (data && data[i]) {
+            td.id = data[i].id;
             td.addEventListener('click', (e) => {
                 selected_event = data[i];
                 refreshEvent();
@@ -98,8 +99,19 @@ function noteInput(event) {
     if (selected_event) {
         var length = quill.getLength();
         selected_event.notes = length > 1 ? quill.getContents() : undefined;
-        localStorage.setItem("events", JSON.stringify(events));
+        //localStorage.setItem("events", JSON.stringify(events));
         //refresh();
+        let element = document.getElementById(selected_event.id);
+        if (element){
+            if (selected_event.notes) {
+                element.classList.add("noteAdded");
+                element.classList.remove("noteRemoved");
+            } else {
+                element.classList.remove("noteAdded");
+                element.classList.add("noteRemoved");
+            }
+        }
+        
     }
 }
 
