@@ -71,7 +71,8 @@ function addRow(container, texts, colspan, data) {
         td.innerHTML = texts[i];
         if (data && data[i]) {
             td.id = data[i].id;
-            td.addEventListener('click', (e) => {
+            td.addEventListener('click', async (e) => {
+                await updateNotes();
                 selected_event = data[i];
                 refreshEvent();
             });
@@ -99,8 +100,6 @@ function noteInput(event) {
     if (selected_event) {
         var length = quill.getLength();
         selected_event.notes = length > 1 ? quill.getContents() : undefined;
-        //localStorage.setItem("events", JSON.stringify(events));
-        //refresh();
         let element = document.getElementById(selected_event.id);
         if (element){
             if (selected_event.notes) {
@@ -116,7 +115,7 @@ function noteInput(event) {
 }
 
 async function refresh() {
-    
+    await updateNotes();    
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var months = [

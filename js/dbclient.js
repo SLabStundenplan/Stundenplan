@@ -13,17 +13,30 @@ async function insertEvents(events) {
     console.log("ready");
 }
 
-async function updateNotes(event_id, notes) {
-    let query = `
-    UPDATE ${event_id} SET notes = '${formatTextForDB(notes)}' RETURN NONE;`;
-    await executeSql(query);
+async function updateNotes() {
+    if (selected_event) {
+        let event_id = selected_event.id;
+        let notes = selected_event.notes;
+        if (notes){
+            let query = `
+    UPDATE ${event_id} SET notes = '${formatTextForDB(JSON.stringify(notes))}' RETURN NONE;`;
+        await executeSql(query);
+        } else {
+            let query = `
+    UPDATE ${event_id} SET notes = '' RETURN NONE;`;
+        await executeSql(query);
+        }
+        
+    }
+
+
 }
 
 async function setUser() {
     let query = `
     SELECT id, name FROM user`;
     let users = await executeSql(query);
-    if (users){
+    if (users) {
         user = user = users[0];
         console.log(user);
     }
@@ -37,11 +50,17 @@ async function getEvents(start, end) {
     AND time::group(start, "day") <= time::group("${end.toISOString()}", "day")
     ORDER BY start`;
     let events = await executeSql(query);
-    if (events){
+    if (events) {
         events.forEach(event => {
             event.start = new Date(event.start);
             event.end = new Date(event.end);
             event.day = new Date(event.day);
+            if(event.notes && event.notes.length > 0){
+                let notes = event.notes.replaceAll("\n", "\\n").replaceAll("\r", "\\r");
+                //console.log(event);
+                //console.log(notes);
+                event.notes = JSON.parse(notes);
+            }
         });
     }
     return events;
