@@ -41,10 +41,18 @@ function getType(event) {
     return "";
 }
 
+function createRemoveButton(event){
+    return `<button class="remove-button" onclick=deleteEvent('${event.id}')>x</button>`;
+}
+
 function formatEventDay(event) {
-    return `${formatTitle(event.title)} <br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)} <br> ${event.location}`;
+    return `${formatTitle(event.title)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)} <br> ${event.location}`;
 }
 
 function formatEventWeek(event) {
-    return `${formatTitle(event.title)} ${getType(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)}`;
+    return `${formatTitle(event.title)} ${getType(event)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)}`;
+}
+
+function formatEventMonth(event) {
+    return `${formatTitle(event.title)} ${getType(event)} ${createRemoveButton(event)}`;
 }

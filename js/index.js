@@ -1,20 +1,7 @@
 let selected_date = new Date();
 let selected_view = "week";
 let selected_event = undefined;
-let events = JSON.parse(localStorage.getItem("events"));
-if (events) {
-    Object.keys(events).forEach(key => {
-        events[key].forEach(event => {
-            if (event.Start) {
-                event.Start = new Date(event.Start);
-            }
-            if (event.Ende) {
-                event.Ende = new Date(event.Ende);
-            }
-        });
-
-    });
-}
+let events = undefined;
 
 window.onload = refresh;
 
@@ -245,7 +232,7 @@ async function refresh() {
                         let rows = getRows(day, groups);
                         if (rows.length > 0) {
                             rows.forEach(events_list => {
-                                addRow(eventContainer, events_list.map((event) => event ? formatTitle(event.title) : ""), 1, events_list);
+                                addRow(eventContainer, events_list.map((event) => event ? formatEventMonth(event) : ""), 1, events_list);
                             });
                         } else {
                             addRow(eventContainer, [`keine Termine ...`], 5);

@@ -5,6 +5,12 @@ let url = "https://stundenplan-agzpj.ondigitalocean.app";
 setUser();
 
 
+async function deleteEvent(eventId){
+    let query = `DELETE ${eventId};`;
+    await executeSql(query);
+    refresh();
+}
+
 async function deleteAllEvents(){
     let query = `DELETE event;`;
     await executeSql(query);
