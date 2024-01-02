@@ -2,6 +2,10 @@ let token = undefined;
 let user = undefined;
 let url = "https://stundenplan-agzpj.ondigitalocean.app";
 
+async function deleteAllEvents(){
+    let query = `DELETE event;`;
+    await executeSql(query);
+}
 
 async function insertEvents(events) {
     let query = events.map(ev => {
