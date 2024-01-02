@@ -164,7 +164,7 @@ async function refresh() {
     }
     eventContainer.innerHTML = "";
 
-    if (events) {
+    if (true) {
         let headers = ["headerTuesday",
             "headerWednesday",
             "headerThursday",
