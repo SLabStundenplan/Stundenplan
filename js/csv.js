@@ -2,13 +2,21 @@ function mapHeader(text) {
     switch (text) {
         case "Titel":
             return "title";
+        case "Title":
+            return "title";
         case "Ort":
+            return "location";
+        case "Location":
             return "location";
         case "Start":
             return "start";
         case "Ende":
             return "end";
+        case "End":
+            return "end";
         case "Beschreibung":
+            return "description";
+        case "Description":
             return "description";
         default:
             return text;
@@ -40,7 +48,7 @@ function parseCsv(csv) {
         for (let j = 0; j < headers.length; j++) {
             let header = mapHeader(headers[j]);
             obj[header] = currentLine[j]?.replace(/^"|"$/g, '').trim();
-            if (headers[j] == "Start" || headers[j] == "Ende") {
+            if (header == "start" || header == "end") {
                 obj[header] = new Date(obj[header]);
             }
         }
