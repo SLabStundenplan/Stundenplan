@@ -53,7 +53,7 @@
         </p>
         <br>
 
-        <button onclick=showLoginDialog(true)> Termin hinzufügen </button>
+        <button onclick="document.getElementById('add-dialog').showModal()"> Termin hinzufügen </button>
         <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
 
         <dialog id="add-dialog">
@@ -67,17 +67,9 @@
                 <br>
 
                 <button onclick=createNewEvent()> Termin erstellen</button>
-                <button onclick=closeLoginDialog(false) type="button">Cancel</button>
+                <button onclick="document.getElementById('add-dialog').close();">cancel</button>
             </div>
         </dialog>
-
-        <script>
-            const dialog = document.getElementById("add-dialog")
-            const wrapper = document.querySelector(".wrapper")
-
-            const showLoginDialog = (show) => show ? dialog.showModal() : dialog.close()
-            dialog.addEventListener('click', (e) => !wrapper.contains(e.target) && dialog.close())
-        </script>
 
         <button onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
         <dialog id="signin-dialog">
