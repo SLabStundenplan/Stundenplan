@@ -1,6 +1,9 @@
-let token = undefined;
+let token = localStorage.getItem("token");
 let user = undefined;
 let url = "https://stundenplan-agzpj.ondigitalocean.app";
+
+setUser();
+
 
 async function deleteAllEvents(){
     let query = `DELETE event;`;
@@ -41,7 +44,7 @@ async function setUser() {
     SELECT id, name FROM user`;
     let users = await executeSql(query);
     if (users) {
-        user = user = users[0];
+        user = users[0];
         console.log(user);
     }
 }
@@ -113,6 +116,7 @@ async function signin() {
         case 200:
             let json = await response.json();
             token = json.token;
+            localStorage.setItem("token", token);
             document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
             await setUser();
             await refresh();
@@ -145,6 +149,7 @@ async function signup() {
         case 200:
             let json = await response.json();
             token = json.token;
+            localStorage.setItem("token", token);
             document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
             await setUser();
             await refresh();

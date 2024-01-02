@@ -18,8 +18,16 @@ if (events) {
 
 window.onload = refresh;
 
-function createNewEvent() {
-    console.log("create Event");
+async function createNewEvent() {
+    await insertEvents([{
+        title : document.getElementById('add-title').value,
+        location : document.getElementById('add-location').value,
+        description : document.getElementById('add-description').value,
+        start : new Date(document.getElementById('add-start').value),
+        end : new Date(document.getElementById('add-end').value),
+    }]);
+    refresh();
+    document.getElementById('add-dialog').close();
 }
 
 function change(i) {
@@ -28,7 +36,7 @@ function change(i) {
             selected_date.setDate(selected_date.getDate() + i);
             break;
         case "week":
-            selected_date.setDate(selected_date.getDate() + i*7);
+            selected_date.setDate(selected_date.getDate() + i * 7);
             break;
         case "month":
             selected_date.setMonth(selected_date.getMonth() + i);
@@ -101,7 +109,7 @@ function noteInput(event) {
         var length = quill.getLength();
         selected_event.notes = length > 1 ? quill.getContents() : undefined;
         let element = document.getElementById(selected_event.id);
-        if (element){
+        if (element) {
             if (selected_event.notes) {
                 element.classList.add("noteAdded");
                 element.classList.remove("noteRemoved");
@@ -110,12 +118,12 @@ function noteInput(event) {
                 element.classList.add("noteRemoved");
             }
         }
-        
+
     }
 }
 
 async function refresh() {
-    await updateNotes();    
+    await updateNotes();
 
     var daysOfWeek = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var months = [
@@ -175,7 +183,7 @@ async function refresh() {
                 setClass(["dayView"], "selected");
                 set_invisible(headers);
                 let eventsToday = await getEvents(selected_date, selected_date);
-                if (eventsToday){
+                if (eventsToday) {
                     if (eventsToday.length > 0) {
                         eventsToday.forEach(event => {
                             addRow(eventContainer, [formatEventDay(event)], 1, [event]);
@@ -194,9 +202,9 @@ async function refresh() {
 
                 let monday = getMonday(selected_date);
                 addRow(eventContainer, [0, 1, 2, 3, 4,].map((i) => formatDate(addDay(monday, i))), 1);
-                
+
                 let week_events = await getEvents(monday, addDay(monday, 6));
-                if (week_events){
+                if (week_events) {
                     let groups = groupBy(week_events, e => getDayKey(e.day));
                     let rows = getRows(selected_date, groups);
                     if (rows.length > 0) {
@@ -215,8 +223,8 @@ async function refresh() {
                 setClass(["monthView"], "selected");
                 set_visible(headers);
                 let first_monday = getMonday(selected_date);
-                let month_events = await getEvents(first_monday, addDay(first_monday, 5*7));
-                if (month_events){
+                let month_events = await getEvents(first_monday, addDay(first_monday, 5 * 7));
+                if (month_events) {
                     let groups = groupBy(month_events, e => getDayKey(e.day));
 
                     for (let i = 0; i < 5; i++) {
@@ -224,7 +232,7 @@ async function refresh() {
                         addRow(eventContainer, [`${getCalendarWeek(day)}.KW`], 5);
                         let monday = getMonday(day);
                         addRow(eventContainer, [0, 1, 2, 3, 4].map((i) => formatDate(addDay(monday, i))), 1);
-    
+
                         let rows = getRows(day, groups);
                         if (rows.length > 0) {
                             rows.forEach(events_list => {

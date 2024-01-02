@@ -57,18 +57,15 @@
         <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
 
         <dialog id="add-dialog">
-            <div class="wrapper">
-                <h2>Termin erstellen</h2>
-                <input placeholder="Termin hinzufügen">
-                </input>
-                <br>
-                <input type="datetime-local" id="addate" name="Zeit hinzufügen">
-                </input>
-                <br>
+            <label>Termin hinzufügen</label><br>
+            <input type="text" id="add-title" name="title" placeholder="Title"/><br>
+            <input type="text" id="add-location" name="location" placeholder="Ort"/><br>
+            <input type="text" id="add-description" name="description" placeholder="Beschreibung"/><br>
+            <label>Start</label><input type="datetime-local" id="add-start" name="Start-Zeit"/><br>
+            <label>Ende</label><input type="datetime-local" id="add-end" name="End-Zeit"/><br>     
 
-                <button onclick=createNewEvent()> Termin erstellen</button>
-                <button onclick="document.getElementById('add-dialog').close();">cancel</button>
-            </div>
+            <button onclick=createNewEvent()> Termin erstellen</button>
+            <button onclick="document.getElementById('add-dialog').close();">cancel</button>
         </dialog>
 
         <button onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
@@ -79,7 +76,8 @@
             <input type="password" id="signin-password" name="password" /><br>
             <label id="signin-error"></label><br>
             <button onclick="signin()">sign in</button>
-            <button onclick="document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML='';">cancel</button>
+            <button
+                onclick="document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML='';">cancel</button>
         </dialog>
         <button onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
         <dialog id="signup-dialog">
@@ -91,7 +89,8 @@
             <input type="password" id="signup-password" name="password" /><br>
             <label id="signup-error"></label><br>
             <button onclick="signup()">sign up</button>
-            <button onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
+            <button
+                onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
         </dialog>
 
         <br>
