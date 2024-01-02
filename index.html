@@ -68,7 +68,7 @@
             <button onclick="document.getElementById('add-dialog').close();">cancel</button>
         </dialog>
 
-        <button onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
+        <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
         <dialog id="signin-dialog">
             <label>Email</label><br>
             <input type="text" id="signin-email" name="email" /><br>
@@ -79,7 +79,7 @@
             <button
                 onclick="document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML='';">cancel</button>
         </dialog>
-        <button onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
+        <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
         <dialog id="signup-dialog">
             <label>Name</label><br>
             <input type="text" id="signup-name" name="name" /><br>
@@ -92,6 +92,8 @@
             <button
                 onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
         </dialog>
+
+        <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">sign out</button>
 
         <br>
 

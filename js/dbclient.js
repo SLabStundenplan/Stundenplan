@@ -46,6 +46,8 @@ async function setUser() {
     if (users) {
         user = users[0];
         console.log(user);
+        setCollapse(['button-signin','button-signup']);
+        setVisible(['button-signout']);
     }
 }
 
@@ -120,6 +122,9 @@ async function signin() {
             document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML = '';
             await setUser();
             await refresh();
+            
+
+
             break;
         case 400:
             document.getElementById('signin-error').innerHTML = 'falsche Email oder falsches Password';

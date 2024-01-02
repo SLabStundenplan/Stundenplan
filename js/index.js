@@ -20,11 +20,11 @@ window.onload = refresh;
 
 async function createNewEvent() {
     await insertEvents([{
-        title : document.getElementById('add-title').value,
-        location : document.getElementById('add-location').value,
-        description : document.getElementById('add-description').value,
-        start : new Date(document.getElementById('add-start').value),
-        end : new Date(document.getElementById('add-end').value),
+        title: document.getElementById('add-title').value,
+        location: document.getElementById('add-location').value,
+        description: document.getElementById('add-description').value,
+        start: new Date(document.getElementById('add-start').value),
+        end: new Date(document.getElementById('add-end').value),
     }]);
     refresh();
     document.getElementById('add-dialog').close();
@@ -97,11 +97,20 @@ function addRow(container, texts, colspan, data) {
 
 
 function refreshEvent() {
-    var dayHeader = document.getElementById("headerNotes");
-    if (dayHeader) {
-        dayHeader.innerHTML = `Notizen für ${formatTitle(selected_event.title)} ${pad(selected_event.start.getDate(), 2)}.${pad(selected_event.start.getMonth() + 1, 2)}.${pad(selected_event.start.getFullYear(), 2)} ${pad(selected_event.start.getHours(), 2)}.${pad(selected_event.start.getMinutes(), 2)} - ${pad(selected_event.end.getHours(), 2)}.${pad(selected_event.end.getMinutes(), 2)}`;
+    if (selected_event) {
+        var dayHeader = document.getElementById("headerNotes");
+        if (dayHeader) {
+            dayHeader.innerHTML = `Notizen für ${formatTitle(selected_event.title)} ${pad(selected_event.start.getDate(), 2)}.${pad(selected_event.start.getMonth() + 1, 2)}.${pad(selected_event.start.getFullYear(), 2)} ${pad(selected_event.start.getHours(), 2)}.${pad(selected_event.start.getMinutes(), 2)} - ${pad(selected_event.end.getHours(), 2)}.${pad(selected_event.end.getMinutes(), 2)}`;
+        }
+        quill.setContents(selected_event.notes);
+    } else {
+        var dayHeader = document.getElementById("headerNotes");
+        if (dayHeader) {
+            dayHeader.innerHTML = `Notizen`;
+        }
+        quill.setContents("");
     }
-    quill.setContents(selected_event.notes);
+
 }
 function noteInput(event) {
 
