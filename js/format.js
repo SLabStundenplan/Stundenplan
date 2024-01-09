@@ -21,6 +21,7 @@ function formatDate(date) {
 }
 
 function getType(event) {
+    console.log(event);
     if (event.description) {
         let type = event.description;
         let index = type.indexOf("|");
@@ -28,11 +29,11 @@ function getType(event) {
             type = type.substring(index + 2, index + 3);
             switch (type) {
                 case "V":
-                    return "(Vorlesung)";
+                    return "- Vorlesung";
                 case "P":
-                    return "(Praktikum)";
+                    return "- Praktikum";
                 case "Ü":
-                    return "(Übung)";
+                    return "- Übung";
                 default:
                     break;
             }
@@ -46,10 +47,11 @@ function createRemoveButton(event){
 }
 
 function formatEventDay(event) {
-    return `${formatTitle(event.title)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)} <br> ${event.location}`;
+    return `${formatTitle(event.title)} ${getType(event)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)} <br> ${event.location}`;
 }
 
 function formatEventWeek(event) {
+    console.log("format Week");
     return `${formatTitle(event.title)} ${getType(event)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)}`;
 }
 
