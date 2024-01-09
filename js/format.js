@@ -9,7 +9,7 @@ function formatTitle(title) {
     if (index == -1) {
         index = title.length;
     }
-    let index2 = title.indexOf(","); // Makerspace, Makerspace, 
+    let index2 = title.indexOf(","); // Makerspace, Makerspace,  
     if (index2 != -1 && index2 < index) {
         index = index2;
     }
