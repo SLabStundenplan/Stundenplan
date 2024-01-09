@@ -21,8 +21,8 @@ function formatDate(date) {
 }
 
 function getType(event) {
-    if (event.Beschreibung) {
-        let type = event.Beschreibung;
+    if (event.description) {
+        let type = event.description;
         let index = type.indexOf("|");
         if (index != -1 && type.length > index + 2) {
             type = type.substring(index + 2, index + 3);
