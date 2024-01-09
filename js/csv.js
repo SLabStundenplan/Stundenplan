@@ -32,11 +32,12 @@ function openCsv(event) {
             await insertEvents(events);
             await refresh();
         };
-        reader.readAsText(selectedFile);
+        reader.readAsText(selectedFile, 'windows-1252');
     }
 }
 
 function parseCsv(csv) {
+    console.log(csv);
     const lines = csv.split(/\r\n|\n/);
     const headers = lines[0].split(';').map(header => header.trim());
 
