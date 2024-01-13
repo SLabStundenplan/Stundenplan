@@ -60,7 +60,7 @@
             <label>Termin hinzufügen</label><br>
             <input type="text" id="add-title" name="title" placeholder="Title"/><br>
             <input type="text" id="add-location" name="location" placeholder="Ort"/><br>
-            <input type="text" id="add-description" name="description" placeholder="Beschreibung"/><br>
+            <input hidden type="text" id="add-description" name="description" placeholder="Beschreibung"/><br>
             <label>Start</label><input type="datetime-local" id="add-start" name="Start-Zeit"/><br>
             <label>Ende</label><input type="datetime-local" id="add-end" name="End-Zeit"/><br>     
 
@@ -140,8 +140,8 @@
             [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
             //[{ 'direction': 'rtl' }],                         // text direction
 
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            //[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
             [{ 'font': [] }],
