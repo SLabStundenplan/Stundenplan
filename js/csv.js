@@ -37,7 +37,6 @@ function openCsv(event) {
 }
 
 function parseCsv(csv) {
-    console.log(csv);
     const lines = csv.split(/\r\n|\n/);
     const headers = lines[0].split(';').map(header => header.trim());
 

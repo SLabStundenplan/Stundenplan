@@ -23,7 +23,6 @@ async function insertEvents(events) {
         } catch (error) { return ""; }
     }).join('');
     await executeSql(query);
-    console.log("ready");
 }
 
 async function updateNotes() {
@@ -51,7 +50,6 @@ async function setUser() {
     let users = await executeSql(query);
     if (users) {
         user = users[0];
-        console.log(user);
         setCollapse(['button-signin','button-signup']);
         setVisible(['button-signout']);
     }
@@ -99,7 +97,6 @@ async function executeSql(query) {
                 let json = await response.json();
                 return json[0].result;
             default:
-                console.log("fail");
                 return undefined;
         }
     }

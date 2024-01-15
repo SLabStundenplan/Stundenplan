@@ -21,7 +21,6 @@ function formatDate(date) {
 }
 
 function getType(event) {
-    console.log(event);
     if (event.description) {
         let type = event.description;
         let index = type.indexOf("|");
@@ -51,7 +50,6 @@ function formatEventDay(event) {
 }
 
 function formatEventWeek(event) {
-    console.log("format Week");
     return `${formatTitle(event.title)} ${getType(event)} ${createRemoveButton(event)}<br> ${pad(event.start.getHours(), 2)}.${pad(event.start.getMinutes(), 2)} - ${pad(event.end.getHours(), 2)}.${pad(event.end.getMinutes(), 2)}`;
 }
 
