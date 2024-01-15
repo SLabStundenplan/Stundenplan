@@ -2,8 +2,12 @@ let selected_date = new Date();
 let selected_view = "week";
 let selected_event = undefined;
 let events = undefined;
+let theme = localStorage.getItem("theme");
 
-window.onload = refresh;
+window.onload = function (){
+    refresh();
+    setTheme();
+};
 
 async function createNewEvent() {
     await insertEvents([{
@@ -260,3 +264,35 @@ function groupBy(xs, fn) {
 };
 
 
+function setTheme(){
+    let style = document.querySelector(':root').style;
+    if (theme == "light") {
+        theme = "light"
+        style.setProperty('--bcolor', '#dcdcdc');
+        style.setProperty('--b2color', '#bebebe');
+        style.setProperty('--b3color', '#afafaf');
+        style.setProperty('--fcolor', '#000000');
+        style.setProperty('--hcolor', '#1E90FF');
+        style.setProperty('--h2color', '#6495ED');
+        style.setProperty('--scolor', 'black');
+    } else {
+        theme = "dark";
+        style.setProperty('--bcolor', '#303030');
+        style.setProperty('--b2color', '#444444');
+        style.setProperty('--b3color', '#595959');
+        style.setProperty('--fcolor', '#F9F8F8');
+        style.setProperty('--hcolor', '#1E90FF');
+        style.setProperty('--h2color', '#6495ED');
+        style.setProperty('--scolor', 'black');
+    }
+    localStorage.setItem("theme", theme);
+}
+
+function changeTheme() {
+    if (theme == "dark") {
+        theme = "light";
+    } else {
+        theme = "dark";
+    }
+    setTheme();
+}

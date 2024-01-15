@@ -1,6 +1,16 @@
+:root {
+  --bcolor: #dcdcdc;
+  --b2color: #bebebe;
+  --b3color: #afafaf;
+  --fcolor: #000000;
+  --hcolor: #1E90FF;
+  --h2color: #6495ED;
+  --scolor: black;
+}
+
 body {
-    background-color: #303030;
-    color: #F9F8F8;
+    background-color: var(--bcolor);
+    color: var(--fcolor);
 }
 
 * {
@@ -11,18 +21,13 @@ body {
 textarea {
   display: block;
   width: 80%;
-  background-color: #444444;
-  color: #F9F8F8;
+  background-color: var(--b2color);
+  color: var(--fcolor);
   height: 50%;
   margin-left: auto;
   margin-right: auto;
   top: -100%;
   resize: none;
-}
-
-body {
-    background-color: #303030;
-    color: #F9F8F8;
 }
 
 * {
@@ -38,8 +43,8 @@ body {
 textarea {
   display: block;
   width: 80%;
-  background-color: #444444;
-  color: #F9F8F8;
+  background-color: var(--b2color);
+  color: var(--fcolor);
   height: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -63,7 +68,7 @@ textarea {
 }
 
 dialog {
-  background-color: #444444;
+  background-color: var(--b2color);
 }
 
 table {
@@ -74,35 +79,35 @@ table {
 
 
 button {
-  color: #F9F8F8;
+  color: var(--fcolor);
   border: 1px solid transparent;
   background-color: transparent;
 }
 
 button a {
   text-decoration: none;
-  color: #F9F8F8;
+  color: var(--fcolor);
 }
 
 .noteAdded {
-  background-color: #1E90FF;
+  background-color: var(--hcolor);
 }
 
 .noteRemoved {
-  background-color: #444444;
+  background-color: var(--b2color);
 }
 
 td:hover.noteAdded {
-  background-color: #6495ED;
+  background-color: var(--h2color);
 }
 
 td:hover.noteRemoved {
-  background-color: #595959;
+  background-color: var(--b3color);
 }
 
 
 dialog {
-  background-color: #444444;
+  background-color: var(--b2color);
 }
 
 table {
@@ -111,44 +116,16 @@ table {
     margin-right: auto;
 }
 
-
-button {
-  color: #F9F8F8;
-  border: 1px solid transparent;
-  background-color: transparent;
-}
-
-button a {
-  text-decoration: none;
-  color: #F9F8F8;
-}
-
-.noteAdded {
-  background-color: #1E90FF;
-}
-
-.noteRemoved {
-  background-color: #444444;
-}
-
-td:hover.noteAdded {
-  background-color: #6495ED;
-}
-
-td:hover.noteRemoved {
-  background-color: #595959;
-}
-
 #dayView:hover:not(.selected), #weekView:hover:not(.selected), #monthView:hover:not(.selected) {
-  background-color: #595959;
+  background-color: var(--b3color);
 }
 #dayView.selected, #weekView.selected, #monthView.selected {
-  box-shadow: inset 0 8px 6px -6px black;
+  box-shadow: inset 0 8px 6px -6px var(--scolor);
 }
 #dayView, #weekView, #monthView {
-  background-color: #444444;
+  background-color: var(--b2color);
   width: 25%;
-  box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px var(--scolor);
 }
 
 #dayView {

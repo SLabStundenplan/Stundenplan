@@ -48,9 +48,9 @@
             <input id="csvInput" type="file" accept=".csv, .ics" onchange="openCsv(event)">
         </label>
         <p class="Ansicht">
-            <button id="dayView" onclick="selected_view='day'; refresh();">Tages Ansicht</button>
-            <button id="weekView" onclick="selected_view='week'; refresh();">Wochen Ansicht</button>
-            <button id="monthView" onclick="selected_view='month'; refresh();">Monats Ansicht</button>
+            <button id="dayView" onclick="selected_view='day'; refresh();">Tages-Ansicht</button>
+            <button id="weekView" onclick="selected_view='week'; refresh();">Wochen-Ansicht</button>
+            <button id="monthView" onclick="selected_view='month'; refresh();">Monats-Ansicht</button>
         </p>
         <br>
 
@@ -95,7 +95,7 @@
         </dialog>
 
         <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">sign out</button>
-
+        <button onclick="changeTheme()" >theme</button>
         <br>
 
         <table border="1">
