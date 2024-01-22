@@ -33,9 +33,27 @@
 </head>
 
 <body>
-    <header id="kopfbereich">
-        <h1>Stundenplan (für Studenten)</h1>
-    </header>
+    <div class = "TopRow">
+      <div class = "LeftSide">
+      <img src = "logo.svg" alt="Logo"/>
+      Stundenplan
+      </div>
+
+      <div class = "RightSide">
+        <label>
+            CSV Öffnen
+            <input id="csvInput" type="file" accept=".csv, .ics" onchange="openCsv(event)">
+        </label>
+        <button onclick="document.getElementById('add-dialog').showModal()"> Termin hinzufügen </button>
+        <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
+        <button onclick="changeTheme()">
+          Theme 
+        </button>
+        <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
+        <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
+
+      </div>
+    </div>
 
     <nav id="navibereich">
 
@@ -43,10 +61,7 @@
 
     <main id="hauptbereich">
 
-        <label>
-            CSV Öffnen
-            <input id="csvInput" type="file" accept=".csv, .ics" onchange="openCsv(event)">
-        </label>
+
         <p class="Ansicht">
             <button id="dayView" onclick="selected_view='day'; refresh();">Tages-Ansicht</button>
             <button id="weekView" onclick="selected_view='week'; refresh();">Wochen-Ansicht</button>
@@ -54,8 +69,7 @@
         </p>
         <br>
 
-        <button onclick="document.getElementById('add-dialog').showModal()"> Termin hinzufügen </button>
-        <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
+
 
         <dialog id="add-dialog">
             <label>Termin hinzufügen</label><br>
@@ -63,13 +77,13 @@
             <input type="text" id="add-location" name="location" placeholder="Ort"/><br>
             <input hidden type="text" id="add-description" name="description" placeholder="Beschreibung"/><br>
             <label>Start</label><input type="datetime-local" id="add-start" name="Start-Zeit"/><br>
-            <label>Ende</label><input type="datetime-local" id="add-end" name="End-Zeit"/><br>     
+            <label>Ende</label><input type="datetime-local" id="add-end" name="End-Zeit"/><br>
 
             <button onclick=createNewEvent()> Termin erstellen</button>
             <button onclick="document.getElementById('add-dialog').close();">cancel</button>
         </dialog>
 
-        <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
+
         <dialog id="signin-dialog">
             <label>Email</label><br>
             <input type="text" id="signin-email" name="email" /><br>
@@ -80,7 +94,7 @@
             <button
                 onclick="document.getElementById('signin-dialog').close(); document.getElementById('signin-error').innerHTML='';">cancel</button>
         </dialog>
-        <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
+
         <dialog id="signup-dialog">
             <label>Name</label><br>
             <input type="text" id="signup-name" name="name" /><br>
@@ -95,7 +109,7 @@
         </dialog>
 
         <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">sign out</button>
-        <button onclick="changeTheme()" >theme</button>
+
         <br>
 
         <table border="1">
