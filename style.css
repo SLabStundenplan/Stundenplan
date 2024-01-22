@@ -6,7 +6,10 @@
   --hcolor: #1E90FF;
   --h2color: #6495ED;
   --scolor: black;
+  --fsize: 18px;
 }
+
+
 
 body {
     background-color: var(--bcolor);
@@ -14,7 +17,7 @@ body {
 }
 
 * {
-  font-family: 'Gill Sans MT', sans-serif, cursive;
+  font-family: 'Comic Sans MS', sans-serif, cursive;
     margin:0;
 }
 
@@ -140,4 +143,30 @@ table {
 
 .remove-button {
   float: right;
+}
+
+
+.TopRow {
+  display: flex;
+  margin-left: 3%;
+  margin-right: 3%;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.TopRow .LeftSide {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  font-size: 18px;
+}
+
+.TopRow .RightSide {
+  font-size: 18px;
+}
+
+.TopRow .LeftSide img {
+  width: 50px;
+  height: 50px;
+  margin-right: 8%;
 }
