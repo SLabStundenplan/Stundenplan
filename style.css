@@ -62,13 +62,7 @@ textarea {
     margin-bottom: 10px;
 }
 
-.ansicht {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 dialog {
   background-color: var(--b2color);
@@ -114,7 +108,7 @@ dialog {
 }
 
 table {
-    width: 80%;
+    width: 93%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -133,12 +127,10 @@ table {
 
 #dayView {
   border-radius: 10px 0 0 10px;
-  margin-left: 5%;
 }
 
 #monthView {
   border-radius: 0 10px 10px 0;
-  margin-right: 5%;
 }
 
 .remove-button {
@@ -148,13 +140,17 @@ table {
 
 .TopRow {
   display: flex;
-  margin-left: 3%;
-  margin-right: 3%;
+
+  width: 100%;
   justify-content: space-between;
   font-size: 18px;
+  background-color: #101010;
+  height: 60px;
+  align-items: center;
 }
 
 .TopRow .LeftSide {
+  margin-left: 3%;
   display: flex;
   align-items: center;
   justify-content:space-between;
@@ -162,11 +158,42 @@ table {
 }
 
 .TopRow .RightSide {
-  font-size: 18px;
+  margin-right: 3%;
 }
 
 .TopRow .LeftSide img {
   width: 50px;
   height: 50px;
   margin-right: 8%;
+}
+
+.openCsv {
+  float: right;
+  margin-right: 3.2%;
+}
+
+.Space1 {
+  height: 75px;
+  display: block;
+}
+
+
+p.Ansicht {
+  width: 100%;
+  text-align: center;
+}
+
+
+.SwitchDate {
+  margin-left: 3.2%;
+}
+
+#headerNotes {
+  margin-left: 3.2%;
+}
+
+.ql-editor, .ql-snow {
+  margin-left: 3.2%;
+  margin-right: 3.2%;
+  width: 93%;
 }
