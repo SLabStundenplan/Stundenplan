@@ -192,7 +192,7 @@ async function refresh() {
                         addRow(eventContainer, [`keine Termine ...`], 1);
                     }
                 } else {
-                    addRow(eventContainer, [`please sign in / sign up`], 1);
+                    addRow(eventContainer, [`Bitte melden Sie sich an oder registrieren Sie sich`], 1);
                 }
                 break;
             case "week":
@@ -215,7 +215,7 @@ async function refresh() {
                         addRow(eventContainer, [`keine Termine ...`], 5);
                     }
                 } else {
-                    addRow(eventContainer, [`please sign in / sign up`], 5);
+                    addRow(eventContainer, [`Bitte melden Sie sich an oder registrieren Sie sich`], 5);
                 }
                 break;
             case "month":
