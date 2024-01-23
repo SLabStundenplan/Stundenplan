@@ -7,6 +7,7 @@
   --h2color: #6495ED;
   --scolor: black;
   --fsize: 18px;
+  --topRowColor: #282828;
 }
 
 
@@ -144,7 +145,7 @@ table {
   width: 100%;
   justify-content: space-between;
   font-size: 18px;
-  background-color: #282828;
+  background-color: var(--topRowColor);
   height: 60px;
   align-items: center;
 }
