@@ -243,7 +243,7 @@ async function refresh() {
                         }
                     }
                 } else {
-                    addRow(eventContainer, [`please sign in / sign up`], 5);
+                    addRow(eventContainer, [`Bitte melden Sie sich an oder registrieren Sie sich`], 5);
                 }
                 break;
             default:
