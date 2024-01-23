@@ -89,7 +89,7 @@
         <dialog id="signin-dialog">
             <label>Email</label><br>
             <input type="text" id="signin-email" name="email" /><br>
-            <label>Password</label><br>
+            <label>Passwort</label><br>
             <input type="password" id="signin-password" name="password" /><br>
             <label id="signin-error"></label><br>
             <button onclick="signin()">sign in</button>
@@ -102,7 +102,7 @@
             <input type="text" id="signup-name" name="name" /><br>
             <label>Email</label><br>
             <input type="text" id="signup-email" name="email" /><br>
-            <label>Password</label><br>
+            <label>Passwort</label><br>
             <input type="password" id="signup-password" name="password" /><br>
             <label id="signup-error"></label><br>
             <button onclick="signup()">sign up</button>
@@ -110,7 +110,7 @@
                 onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
         </dialog>
 
-        <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">sign out</button>
+        <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">Abmelden</button>
 
         <br>
 
