@@ -40,7 +40,9 @@
       </div>
 
       <div class = "RightSide">
-
+        <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">Anmelden</button>
+        <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">Registrieren</button>
+        <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">Abmelden</button>
         <button onclick="document.getElementById('add-dialog').showModal()"> Termin hinzufügen </button>
         <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
         <button onclick="document.getElementById('csvInput').click()">
@@ -50,8 +52,7 @@
         <button onclick="changeTheme()">
           Theme
         </button>
-        <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">Anmelden</button>
-        <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">Registrieren</button>
+
 
       </div>
     </div>
@@ -110,7 +111,7 @@
                 onclick="document.getElementById('signup-dialog').close(); document.getElementById('signup-error').innerHTML='';">cancel</button>
         </dialog>
 
-        <button id="button-signout" style="visibility: collapse;" onclick="token = ''; localStorage.removeItem('token'); selected_event = undefined; refresh(); refreshEvent(); setVisible(['button-signin','button-signup']); setHidden(['button-signout']);">Abmelden</button>
+
 
         <br>
 
