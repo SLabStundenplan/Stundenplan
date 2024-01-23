@@ -275,6 +275,7 @@ function setTheme(){
         style.setProperty('--hcolor', '#1E90FF');
         style.setProperty('--h2color', '#6495ED');
         style.setProperty('--scolor', 'black');
+        style.setProperty('--topRowColor', '#C0C0C0');
     } else {
         theme = "dark";
         style.setProperty('--bcolor', '#303030');
@@ -284,6 +285,7 @@ function setTheme(){
         style.setProperty('--hcolor', '#1E90FF');
         style.setProperty('--h2color', '#6495ED');
         style.setProperty('--scolor', 'black');
+        style.setProperty('--topRowColor', '#282828');
     }
     localStorage.setItem("theme", theme);
 }
