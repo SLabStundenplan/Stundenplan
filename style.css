@@ -18,7 +18,7 @@ body {
 }
 
 * {
-  font-family: 'Comic Sans MS', sans-serif, cursive;
+  font-family: 'Trebuchet MS', sans-serif;
     margin:0;
 }
 
@@ -32,11 +32,6 @@ textarea {
   margin-right: auto;
   top: -100%;
   resize: none;
-}
-
-* {
-  font-family: 'Comic Sans MS', sans-serif, cursive;
-    margin:0;
 }
 
 #csvInput  {
