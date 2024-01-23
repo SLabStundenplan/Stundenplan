@@ -40,14 +40,15 @@
       </div>
 
       <div class = "RightSide">
-        <label>
-            CSV Öffnen
-            <input id="csvInput" type="file" accept=".csv, .ics" onchange="openCsv(event)">
-        </label>
+
         <button onclick="document.getElementById('add-dialog').showModal()"> Termin hinzufügen </button>
         <button onclick="deleteAllEvents(); refresh();">Alle Termine löschen</button>
+        <button onclick="document.getElementById('csvInput').click()">
+            CSV Öffnen
+            <input id="csvInput" type="file" accept=".csv, .ics" style="display: none;" onchange="openCsv(event)">
+        </button>
         <button onclick="changeTheme()">
-          Theme 
+          Theme
         </button>
         <button id="button-signin" onclick="document.getElementById('signin-dialog').showModal()">sign in</button>
         <button id="button-signup" onclick="document.getElementById('signup-dialog').showModal()">sign up</button>
@@ -55,13 +56,14 @@
       </div>
     </div>
 
+
     <nav id="navibereich">
 
     </nav>
 
     <main id="hauptbereich">
 
-
+        <div class = "Space1"> </div>
         <p class="Ansicht">
             <button id="dayView" onclick="selected_view='day'; refresh();">Tages-Ansicht</button>
             <button id="weekView" onclick="selected_view='week'; refresh();">Wochen-Ansicht</button>
@@ -128,9 +130,11 @@
             </tfoot>
         </table>
         <br>
-        <button onclick="change(-1)">&lt;</button>
-        <label id="labelSelectedDate"></label>
-        <button onclick="change(1)">></button>
+        <div class = "SwitchDate">
+          <button onclick="change(-1)">&lt;</button>
+          <label id="labelSelectedDate"></label>
+          <button onclick="change(1)">></button>
+        </div>
         <div id="eventContainer"></div>
         <br>
         <h3 id="headerNotes"> Notizen </h3>
@@ -140,42 +144,44 @@
     </main>
     <footer>
     </footer>
-    <script>
-        hljs.configure({   // optionally configure hljs
-            languages: ['javascript', 'css']
-        });
-        var toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['code-block'],
-            ['image'],
-            ['formula'],
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-            //[{ 'direction': 'rtl' }],                         // text direction
+    <div class = "Notes">
+      <script>
+          hljs.configure({   // optionally configure hljs
+              languages: ['javascript', 'css']
+          });
+          var toolbarOptions = [
+              ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+              ['code-block'],
+              ['image'],
+              ['formula'],
+              [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+              [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+              //[{ 'direction': 'rtl' }],                         // text direction
 
-            //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
+              [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+              [{ 'font': [] }],
+              [{ 'align': [] }],
 
-            ['clean']                                         // remove formatting button
-        ];
+              ['clean']                                         // remove formatting button
+          ];
 
-        var quill = new Quill('#editor', {
-            modules: {
-                syntax: {
-                    highlight: (text) => hljs.highlightAuto(text).value,
-                },
-                toolbar: toolbarOptions
-            },
-            theme: 'snow'
-        });
-        quill.on('text-change', noteInput);
-    </script>
+          var quill = new Quill('#editor', {
+              modules: {
+                  syntax: {
+                      highlight: (text) => hljs.highlightAuto(text).value,
+                  },
+                  toolbar: toolbarOptions
+              },
+              theme: 'snow'
+          });
+          quill.on('text-change', noteInput);
+      </script>
+    </div>
 </body>
 
 </html>
